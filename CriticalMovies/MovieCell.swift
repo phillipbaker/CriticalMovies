@@ -26,12 +26,21 @@ class MovieCell: UICollectionViewCell {
         return label
     }()
     
-    private(set) var bylineLabel: UILabel = {
+    private(set) var summaryLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .secondaryLabel
         label.adjustsFontForContentSizeCategory = true
         label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private(set) var bylineLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.font = UIFont.preferredFont(forTextStyle: .callout)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -51,26 +60,32 @@ class MovieCell: UICollectionViewCell {
             DispatchQueue.main.async { self.imageView.image = image }
         }
         titleLabel.text = movie.title
-        bylineLabel.text = movie.byline
+        summaryLabel.text = movie.summary
+        bylineLabel.text = "By \(movie.byline)"
     }
     
     private func configure() {
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(summaryLabel)
         contentView.addSubview(bylineLabel)
         
-        let spacing: CGFloat = 4
+        let spacing: CGFloat = 8
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: spacing),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            bylineLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing / 2),
+            summaryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing),
+            summaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            summaryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            bylineLabel.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: spacing),
             bylineLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bylineLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             bylineLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)

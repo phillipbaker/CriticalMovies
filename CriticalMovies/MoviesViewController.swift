@@ -22,7 +22,7 @@ class MoviesViewController: UIViewController {
     }
     
     private func configureViewController() {
-        title = "Critic’s Picks"
+        title = "NYT Critic’s Picks"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -36,10 +36,20 @@ class MoviesViewController: UIViewController {
         let cellConfiguration = UICollectionView.CellRegistration<MovieCell, Movie> { cell, indexPath, movie in
             cell.displayContent(for: movie)
         }
-
-        dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        
+        let headerRegistration = UICollectionView.SupplementaryRegistration
+        <SectionHeaderSupplementaryView>(elementKind: SectionHeaderSupplementaryView.identifier) {
+            supplementaryView, string, indexPath in
+            supplementaryView.label.text = "Recent"
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             return collectionView.dequeueConfiguredReusableCell(using: cellConfiguration, for: indexPath, item: itemIdentifier)
-        })
+        }
+        
+        dataSource.supplementaryViewProvider = { view, kind, index in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: index)
+        }
         
         collectionView.dataSource = dataSource
         
@@ -59,22 +69,30 @@ class MoviesViewController: UIViewController {
     
     private func generateLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(100))
-    
+                                              heightDimension: .fractionalHeight(1.0))
+        
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(100))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.875),
+                                               heightDimension: .estimated(360))
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(16)
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
-        section.interGroupSpacing = 32
+        section.interGroupSpacing = 16
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(50))
+        
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: SectionHeaderSupplementaryView.identifier, alignment: .top)
+        
+        section.boundarySupplementaryItems = [sectionHeader]
         
         let layout = UICollectionViewCompositionalLayout(section: section)
-                
+        
         return layout
     }
 }
