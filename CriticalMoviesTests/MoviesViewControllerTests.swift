@@ -10,11 +10,11 @@ import XCTest
 
 class MoviesViewControllerTests: XCTestCase {
     
-    private var sut: MoviesViewController!
+    private var sut: BrowseViewController!
     
     override func setUp() {
         super.setUp()
-        sut = MoviesViewController()
+        sut = BrowseViewController()
         let mockLayout = UICollectionViewLayout()
         sut.collectionView = UICollectionView(frame: .zero, collectionViewLayout: mockLayout)
         

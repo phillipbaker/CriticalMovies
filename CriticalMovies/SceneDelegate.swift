@@ -17,9 +17,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
         
-        let vc = MoviesViewController()
-        let navigationVC = UINavigationController(rootViewController: vc)
-        window?.rootViewController = navigationVC
+        let tabBarController = UITabBarController()
+        
+        let browseVC = BrowseViewController()
+        let browseNC = UINavigationController(rootViewController: browseVC)
+        
+        let browseTabBarItem = UITabBarItem()
+        browseTabBarItem.title = "Browse"
+        browseTabBarItem.image = UIImage(systemName: "film")
+        browseNC.tabBarItem = browseTabBarItem
+        
+        let searchVC = SearchViewController()
+        
+        let searchTabBarItem = UITabBarItem()
+        searchTabBarItem.title = "Search"
+        searchTabBarItem.image = UIImage(systemName: "magnifyingglass")
+        searchVC.tabBarItem = searchTabBarItem
+        
+        tabBarController.viewControllers = [browseNC, searchVC]
+        tabBarController.selectedViewController = browseNC
+
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 

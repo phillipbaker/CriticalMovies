@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MoviesViewController: UIViewController {
+class BrowseViewController: UIViewController {
     
     enum Section { case recent }
     
@@ -25,7 +25,7 @@ class MoviesViewController: UIViewController {
     }
     
     private func configureViewController() {
-        title = "NYT Critic’s Picks"
+        title = "Browse"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -102,7 +102,7 @@ class MoviesViewController: UIViewController {
 }
 
 
-extension MoviesViewController: UICollectionViewDelegate {
+extension BrowseViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let movie = dataSource.itemIdentifier(for: indexPath) else { return }
         let destinationVC = SingleReviewVC(movie: movie)
@@ -111,7 +111,7 @@ extension MoviesViewController: UICollectionViewDelegate {
 }
 
 
-extension MoviesViewController {
+extension BrowseViewController {
 //    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 //        let offsetX = scrollView.contentOffset.x
 //        let contentWidth = scrollView.contentSize.width
