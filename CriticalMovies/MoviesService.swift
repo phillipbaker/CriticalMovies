@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MoviesService {
-    func fetchMovies(withCompletion completion: @escaping (Result<CriticsPicks,MovieError>) -> Void)
+    func fetchMovies(atOffset offset: Int, withCompletion completion: @escaping (Result<CriticsPicks,MovieError>) -> Void)
 }
 
 final class CriticsPicksService: MoviesService {
@@ -18,8 +18,8 @@ final class CriticsPicksService: MoviesService {
     
     let cache = NSCache<NSString, UIImage>()
     
-    func fetchMovies(withCompletion completion: @escaping (Result<CriticsPicks,MovieError>) -> Void) {
-        let criticsPicksUrl = APIConstants.baseUrl.appending(APIConstants.criticsPicks + "?" + "api-key=\(APIConstants.apiKey)")
+    func fetchMovies(atOffset offset: Int, withCompletion completion: @escaping (Result<CriticsPicks,MovieError>) -> Void) {
+        let criticsPicksUrl = ApiConstants.baseUrl.appending(ApiConstants.criticsPicks + "?" + "api-key=\(ApiConstants.apiKey)" + "&" + "offset=\(offset)")
         
         guard let url = URL(string: criticsPicksUrl) else {
             completion(.failure(.invalidUrl))

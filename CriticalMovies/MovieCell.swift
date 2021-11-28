@@ -9,41 +9,11 @@ import UIKit
 
 class MovieCell: UICollectionViewCell {
     
-    private(set) var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private(set) var titleLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private(set) var summaryLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textColor = .secondaryLabel
-        label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private(set) var bylineLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.preferredFont(forTextStyle: .callout)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private(set) var imageView = CMCoverImageView(frame: .zero)
+    private(set) var titleLabel = CMTitleLabel()
+    private(set) var bylineLabel = CMBylineLabel()
+    private(set) var summaryLabel = CMSummaryLabel()
+    private(set) var spacer = VerticalSpacerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,17 +21,15 @@ class MovieCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        configure()
     }
     
     func displayContent(for movie: Movie) {
-        CriticsPicksService.shared.downloadImage(from: movie.multimedia.imageUrl) { image in
-            guard image != nil else { return }
-            DispatchQueue.main.async { self.imageView.image = image }
-        }
+        imageView.downloadImage(fromUrl: movie.multimedia.imageUrl)
         titleLabel.text = movie.title
-        summaryLabel.text = movie.summary
         bylineLabel.text = "By \(movie.byline)"
+        summaryLabel.text = movie.summary
     }
     
     private func configure() {
@@ -69,26 +37,35 @@ class MovieCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(summaryLabel)
         contentView.addSubview(bylineLabel)
+        contentView.addSubview(spacer)
         
-        let spacing: CGFloat = 8
+        contentView.backgroundColor = .tertiarySystemFill
+        
+        
+        let spacing: CGFloat = 12
+        let padding: CGFloat = 12
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             
-            summaryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing),
-            summaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            summaryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            summaryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            summaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            summaryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             
             bylineLabel.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: spacing),
-            bylineLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            bylineLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            bylineLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
+            bylineLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            bylineLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
+            bylineLabel.bottomAnchor.constraint(lessThanOrEqualTo: spacer.topAnchor),
+
+            spacer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            spacer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            spacer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding)
         ])
     }
 }
