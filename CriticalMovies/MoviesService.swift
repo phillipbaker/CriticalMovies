@@ -19,7 +19,7 @@ final class CriticsPicksService: MoviesService {
     let cache = NSCache<NSString, UIImage>()
     
     func fetchMovies(atOffset offset: Int, withCompletion completion: @escaping (Result<CriticsPicks,MovieError>) -> Void) {
-        let criticsPicksUrl = ApiConstants.baseUrl.appending(ApiConstants.criticsPicks + "?" + "api-key=\(ApiConstants.apiKey)" + "&" + "offset=\(offset)")
+        let criticsPicksUrl = ApiConstant.baseUrl.appending(ApiConstant.criticsPicks + "?" + "api-key=\(ApiConstant.apiKey)" + "&" + "offset=\(offset)")
         
         guard let url = URL(string: criticsPicksUrl) else {
             completion(.failure(.invalidUrl))

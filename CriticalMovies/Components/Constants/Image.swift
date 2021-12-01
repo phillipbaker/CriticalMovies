@@ -7,6 +7,6 @@
 
 import UIKit
 
-enum Images {
+enum Image {
     static let placeholder = UIImage(systemName: "film")
 }
