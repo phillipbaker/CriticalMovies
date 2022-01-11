@@ -13,7 +13,6 @@ class MovieCell: UICollectionViewCell {
     private(set) var titleLabel = CMTitleLabel()
     private(set) var bylineLabel = CMBylineLabel()
     private(set) var summaryLabel = CMSummaryLabel()
-    private(set) var spacer = VerticalSpacerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,10 +25,10 @@ class MovieCell: UICollectionViewCell {
     }
     
     func displayContent(for movie: Movie) {
-        imageView.downloadImage(fromUrl: movie.multimedia.imageUrl)
+        imageView.downloadImage(from: movie.multimedia.imageUrl)
         titleLabel.text = movie.title
-        bylineLabel.text = "By \(movie.byline)"
         summaryLabel.text = movie.summary
+        bylineLabel.text = "By \(movie.byline)"
     }
     
     private func configure() {
@@ -37,7 +36,6 @@ class MovieCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(summaryLabel)
         contentView.addSubview(bylineLabel)
-        contentView.addSubview(spacer)
         
         contentView.backgroundColor = .tertiarySystemFill
         
@@ -54,18 +52,14 @@ class MovieCell: UICollectionViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             
-            summaryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            summaryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing),
             summaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             summaryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             
-            bylineLabel.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: spacing),
+            bylineLabel.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: 16),
             bylineLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             bylineLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            bylineLabel.bottomAnchor.constraint(lessThanOrEqualTo: spacer.topAnchor),
-
-            spacer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            spacer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            spacer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding)
+            bylineLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
 }

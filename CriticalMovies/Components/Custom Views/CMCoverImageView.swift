@@ -26,7 +26,7 @@ class CMCoverImageView: UIImageView {
         setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
     }
     
-    func downloadImage(fromUrl url: String) {
+    func downloadImage(from url: String) {
         CriticsPicksService.shared.downloadImage(from: url) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async { self.image = image }

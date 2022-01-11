@@ -15,6 +15,8 @@ class SearchViewController: UIViewController {
     }
     
     private func configureViewController() {
+        navigationItem.title = "Search"
+        navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
     }
 }

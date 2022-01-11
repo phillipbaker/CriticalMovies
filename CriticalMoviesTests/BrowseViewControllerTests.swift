@@ -1,6 +1,6 @@
 //
 //  CriticalMoviesTests.swift
-//  MoviesViewControllerTests
+//  BrowseViewControllerTests
 //
 //  Created by Phillip Baker on 9/27/21.
 //
@@ -8,13 +8,13 @@
 @testable import CriticalMovies
 import XCTest
 
-class MoviesViewControllerTests: XCTestCase {
+class BrowseViewControllerTests: XCTestCase {
     
-    private var sut: BrowseViewController!
+    private var sut: RecentMoviesViewController!
     
     override func setUp() {
         super.setUp()
-        sut = BrowseViewController()
+        sut = RecentMoviesViewController()
         let mockLayout = UICollectionViewLayout()
         sut.collectionView = UICollectionView(frame: .zero, collectionViewLayout: mockLayout)
         

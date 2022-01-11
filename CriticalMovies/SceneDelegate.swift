@@ -19,23 +19,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tabBarController = UITabBarController()
         
-        let browseVC = BrowseViewController()
-        let browseNC = UINavigationController(rootViewController: browseVC)
+        let recentVC = RecentMoviesViewController()
+        let recentNC = UINavigationController(rootViewController: recentVC)
         
-        let browseTabBarItem = UITabBarItem()
-        browseTabBarItem.title = "Browse"
-        browseTabBarItem.image = UIImage(systemName: "film")
-        browseNC.tabBarItem = browseTabBarItem
+        let recentTabBarItem = UITabBarItem()
+        recentTabBarItem.title = "Recent"
+        recentTabBarItem.image = UIImage(systemName: "film")
+        recentNC.tabBarItem = recentTabBarItem
         
         let searchVC = SearchViewController()
+        let searchNC = UINavigationController(rootViewController: searchVC)
         
         let searchTabBarItem = UITabBarItem()
         searchTabBarItem.title = "Search"
         searchTabBarItem.image = UIImage(systemName: "magnifyingglass")
         searchVC.tabBarItem = searchTabBarItem
         
-        tabBarController.viewControllers = [browseNC, searchVC]
-        tabBarController.selectedViewController = browseNC
+        tabBarController.viewControllers = [recentNC, searchNC]
+        tabBarController.selectedViewController = recentNC
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
