@@ -37,6 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarController.viewControllers = [recentNC, searchNC]
         tabBarController.selectedViewController = recentNC
+        tabBarController.overrideUserInterfaceStyle = .dark
 
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
