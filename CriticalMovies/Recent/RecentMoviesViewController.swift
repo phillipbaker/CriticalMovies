@@ -21,6 +21,7 @@ class RecentMoviesViewController: UIViewController {
     var offset = 0
     var movies: [Movie] = []
     var isLoadingMovies = false
+    var loadingView = LoadingView()
 
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
@@ -54,6 +55,7 @@ class RecentMoviesViewController: UIViewController {
     
     func getMovies(at offset: Int) {
         isLoadingMovies = true
+        loadingView.isHidden = false
         
         CriticsPicksService.shared.fetchMovies(atOffset: offset) { [weak self] result in
             guard let self = self else { return }
@@ -66,6 +68,7 @@ class RecentMoviesViewController: UIViewController {
             }
             
             self.isLoadingMovies = false
+            self.loadingView.isHidden = true
         }
     }
     
@@ -84,18 +87,6 @@ class RecentMoviesViewController: UIViewController {
             self.dataSource.apply(snapshot, animatingDifferences: false)
         }
     }
-    
-    
-//    func showLoadingView() -> UIView {
-//        let container = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//        
-//        let activityIndicator = UIActivityIndicatorView()
-//        activityIndicator.center = container.center
-//        container.addSubview(activityIndicator)
-//        
-//        activityIndicator.startAnimating()
-//        return container
-//    }
     
     
     // MARK: - Compositional Layout
@@ -125,6 +116,18 @@ class RecentMoviesViewController: UIViewController {
             section.interGroupSpacing = 20
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
             
+            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                    heightDimension: .estimated(50)
+            )
+            
+            let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: footerSize,
+                elementKind: "footer-activity-indicator",
+                alignment: .bottom
+            )
+            
+            section.boundarySupplementaryItems = [sectionFooter]
+            
             return section
         }
         
@@ -141,8 +144,26 @@ class RecentMoviesViewController: UIViewController {
             cell.displayContent(for: movie)
         }
         
+        let footerRegistration = UICollectionView.SupplementaryRegistration(elementKind: "footer-activity-indicator") { supplementaryView, _, _ in
+            supplementaryView.addSubview(self.loadingView)
+            
+            self.loadingView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                self.loadingView.centerXAnchor.constraint(equalTo: supplementaryView.centerXAnchor),
+                self.loadingView.centerYAnchor.constraint(equalTo: supplementaryView.centerYAnchor)
+            ])
+            
+            self.loadingView.isHidden = true
+        }
+        
         dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: collectionView) { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: movieCellRegistration, for: indexPath, item: itemIdentifier)
+        }
+        
+        dataSource.supplementaryViewProvider = { view, kind, index in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(
+                using: footerRegistration, for: index)
         }
         
         collectionView.dataSource = dataSource
