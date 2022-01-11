@@ -20,6 +20,7 @@ class CMSummaryLabel: UILabel {
     
     private func configure() {
         numberOfLines = 0
+        textColor = .secondaryLabel
         adjustsFontForContentSizeCategory = true
         font = UIFont.preferredFont(forTextStyle: .body)
         translatesAutoresizingMaskIntoConstraints = false

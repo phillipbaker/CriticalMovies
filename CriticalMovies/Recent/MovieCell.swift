@@ -37,6 +37,8 @@ class MovieCell: UICollectionViewCell {
         contentView.addSubview(summaryLabel)
         contentView.addSubview(bylineLabel)
         
+        contentView.backgroundColor = UIColor(named: "descriptionBackground")
+        
         let spacing: CGFloat = 12
         let padding: CGFloat = 12
         
