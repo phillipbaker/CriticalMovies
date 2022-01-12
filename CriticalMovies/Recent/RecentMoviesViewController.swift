@@ -114,7 +114,7 @@ class RecentMoviesViewController: UIViewController {
             section = NSCollectionLayoutSection(group: group)
             
             section.interGroupSpacing = 20
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
             
             let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                     heightDimension: .estimated(50)

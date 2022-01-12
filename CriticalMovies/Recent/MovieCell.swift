@@ -37,6 +37,9 @@ class MovieCell: UICollectionViewCell {
         contentView.addSubview(summaryLabel)
         contentView.addSubview(bylineLabel)
         
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerCurve = .continuous
         contentView.backgroundColor = UIColor(named: "descriptionBackground")
         
         let spacing: CGFloat = 12
