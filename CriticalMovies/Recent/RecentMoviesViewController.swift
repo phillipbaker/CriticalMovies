@@ -117,7 +117,7 @@ class RecentMoviesViewController: UIViewController {
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
             
             let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                    heightDimension: .estimated(50)
+                                                    heightDimension: .estimated(44)
             )
             
             let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(
@@ -193,7 +193,7 @@ extension RecentMoviesViewController: UICollectionViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
         
-        if scrollPosition > contentHeight - height {
+        if scrollPosition > contentHeight - height - 44 { // 44 is height of supplmentary footer view
             guard !isLoadingMovies else { return }
             offset += 20
             getMovies(at: offset)
