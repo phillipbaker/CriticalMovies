@@ -5,6 +5,7 @@
 //  Created by Phillip Baker on 9/22/21.
 //
 
+import Foundation
 import UIKit
 
 class MovieCell: UICollectionViewCell {
@@ -28,7 +29,7 @@ class MovieCell: UICollectionViewCell {
         imageView.downloadImage(from: movie.multimedia.imageUrl)
         titleLabel.text = movie.title
         summaryLabel.text = movie.summary
-        bylineLabel.text = "By \(movie.byline)"
+        bylineLabel.attributedText = bylineLabel.createAttributedByline(from: movie.byline)
     }
     
     private func configure() {

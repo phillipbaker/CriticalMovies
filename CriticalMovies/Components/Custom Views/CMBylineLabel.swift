@@ -25,4 +25,14 @@ class CMBylineLabel: UILabel {
         translatesAutoresizingMaskIntoConstraints = false
         font = UIFont.preferredFont(forTextStyle: .callout)
     }
+    
+    func createAttributedByline(from byline: String) -> NSAttributedString {
+        let attributedByline = NSMutableAttributedString(string: "By ")
+        
+        let italicAttribute = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout).italic()]
+        let attributedAuthor = NSAttributedString(string: byline, attributes: italicAttribute)
+        
+        attributedByline.append(attributedAuthor)
+        return attributedByline
+    }
 }
