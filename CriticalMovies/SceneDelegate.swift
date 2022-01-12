@@ -39,6 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.selectedViewController = recentNC
         tabBarController.overrideUserInterfaceStyle = .dark
 
+        window?.tintColor = UIColor(named: "gold")
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
