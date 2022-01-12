@@ -19,13 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tabBarController = UITabBarController()
         
-        let recentVC = RecentMoviesViewController()
-        let recentNC = UINavigationController(rootViewController: recentVC)
+        let criticsPicksVC = CriticsPicksViewController()
+        let criticsPicksNC = UINavigationController(rootViewController: criticsPicksVC)
         
-        let recentTabBarItem = UITabBarItem()
-        recentTabBarItem.title = "Recent"
-        recentTabBarItem.image = UIImage(systemName: "film")
-        recentNC.tabBarItem = recentTabBarItem
+        let criticsPicksTabBarItem = UITabBarItem()
+        criticsPicksTabBarItem.title = "Critics’ Picks"
+        criticsPicksTabBarItem.image = UIImage(systemName: "film")
+        criticsPicksNC.tabBarItem = criticsPicksTabBarItem
         
         let searchVC = SearchViewController()
         let searchNC = UINavigationController(rootViewController: searchVC)
@@ -35,8 +35,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         searchTabBarItem.image = UIImage(systemName: "magnifyingglass")
         searchVC.tabBarItem = searchTabBarItem
         
-        tabBarController.viewControllers = [recentNC, searchNC]
-        tabBarController.selectedViewController = recentNC
+        tabBarController.viewControllers = [criticsPicksNC, searchNC]
+        tabBarController.selectedViewController = criticsPicksNC
         tabBarController.overrideUserInterfaceStyle = .dark
 
         window?.tintColor = UIColor(named: "gold")

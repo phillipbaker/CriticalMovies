@@ -1,5 +1,5 @@
 //
-//  MoviesViewController.swift
+//  CriticsPicksViewController.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 9/21/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecentMoviesViewController: UIViewController {
+class CriticsPicksViewController: UIViewController {
     
     // MARK: - Section Enum
     
@@ -40,7 +40,7 @@ class RecentMoviesViewController: UIViewController {
     // MARK: - View Methods
     
     private func configureViewController() {
-        navigationItem.title = "Recent"
+        navigationItem.title = "Critics’ Picks"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -173,7 +173,7 @@ class RecentMoviesViewController: UIViewController {
     }
 }
 
-extension RecentMoviesViewController: UICollectionViewDelegate {
+extension CriticsPicksViewController: UICollectionViewDelegate {
     
     // MARK: - Load Review in Web View
     

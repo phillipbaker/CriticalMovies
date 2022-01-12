@@ -1,6 +1,6 @@
 //
 //  CriticalMoviesTests.swift
-//  BrowseViewControllerTests
+//  CriticsPicksViewControllerTests
 //
 //  Created by Phillip Baker on 9/27/21.
 //
@@ -8,13 +8,13 @@
 @testable import CriticalMovies
 import XCTest
 
-class BrowseViewControllerTests: XCTestCase {
+class CriticsPicksViewControllerTests: XCTestCase {
     
-    private var sut: RecentMoviesViewController!
+    private var sut: CriticsPicksViewController!
     
     override func setUp() {
         super.setUp()
-        sut = RecentMoviesViewController()
+        sut = CriticsPicksViewController()
         let mockLayout = UICollectionViewLayout()
         sut.collectionView = UICollectionView(frame: .zero, collectionViewLayout: mockLayout)
         
@@ -30,7 +30,7 @@ class BrowseViewControllerTests: XCTestCase {
     // MARK: - Tests
     
     func test_navigationBar_shouldHaveTitle() {
-        XCTAssertEqual(sut.navigationItem.title, "NYT Critic’s Picks")
+        XCTAssertEqual(sut.navigationItem.title, "Critics’ Picks")
     }
     
     func test_collectionView_shouldBeConnected() {
