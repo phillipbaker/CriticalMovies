@@ -1,5 +1,5 @@
 //
-//  WebViewController.swift
+//  WebView.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 12/10/21.
@@ -8,16 +8,16 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
-    
+class WebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView: WKWebView!
-    var urlString: String
+    var url: String
     
-    init(urlString: String) {
-        self.urlString = urlString
+    init(url: String) {
+        self.url = url
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -36,12 +36,12 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeMe))
         navigationItem.rightBarButtonItem = doneButton
 
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: url) else { return }
         let request = URLRequest(url: url)
         webView.load(request)
     }
 
     @objc func closeMe() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }

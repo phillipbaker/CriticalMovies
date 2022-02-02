@@ -7,12 +7,7 @@
 
 import UIKit
 
-class LoadingView: UICollectionReusableView {
-    
-    static var reuseIdentifier: String {
-        return String(describing: self)
-    }
-    
+class LoadingView: UIView {
     var activityIndicator = UIActivityIndicatorView()
     
     override init(frame: CGRect) {
@@ -24,7 +19,6 @@ class LoadingView: UICollectionReusableView {
         super.init(coder: coder)
         configure()
     }
-    
     
     private func configure() {
         addSubview(activityIndicator)

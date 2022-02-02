@@ -7,25 +7,28 @@
 
 import Foundation
 
-struct Movie: Decodable, Hashable {
+struct Movie: Hashable {
     let identifier = UUID()
     let title: String
+    let criticsPick: Int
     let byline: String
     let headline: String
     let summary: String
+    let publicationDate: String
     let link: Link
     let multimedia: Multimedia
-    
+
     static func == (lhs: Movie, rhs: Movie) -> Bool {
         return lhs.identifier == rhs.identifier
     }
+}
 
+extension Movie: Decodable {
     enum CodingKeys: String, CodingKey {
+        case byline, headline, link, multimedia
         case title = "display_title"
-        case byline
-        case headline
+        case criticsPick = "critics_pick"
         case summary = "summary_short"
-        case link
-        case multimedia
+        case publicationDate = "publication_date"
     }
 }

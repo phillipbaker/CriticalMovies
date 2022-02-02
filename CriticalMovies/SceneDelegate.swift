@@ -8,38 +8,36 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
-        
+
         let tabBarController = UITabBarController()
-        
-        let criticsPicksVC = CriticsPicksViewController()
+
+        let criticsPicksVC = CriticsPicksController()
         let criticsPicksNC = UINavigationController(rootViewController: criticsPicksVC)
-        
+
         let criticsPicksTabBarItem = UITabBarItem()
         criticsPicksTabBarItem.title = "Critics’ Picks"
-        criticsPicksTabBarItem.image = UIImage(systemName: "film")
+        criticsPicksTabBarItem.image = Image.film
         criticsPicksNC.tabBarItem = criticsPicksTabBarItem
-        
-        let searchVC = SearchViewController()
+
+        let searchVC = SearchController()
         let searchNC = UINavigationController(rootViewController: searchVC)
-        
+
         let searchTabBarItem = UITabBarItem()
         searchTabBarItem.title = "Search"
-        searchTabBarItem.image = UIImage(systemName: "magnifyingglass")
+        searchTabBarItem.image = Image.search
         searchVC.tabBarItem = searchTabBarItem
-        
+
         tabBarController.viewControllers = [criticsPicksNC, searchNC]
         tabBarController.selectedViewController = criticsPicksNC
         tabBarController.overrideUserInterfaceStyle = .dark
 
-        window?.tintColor = UIColor(named: "gold")
+        window?.tintColor = Color.gold
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
@@ -71,7 +69,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-
