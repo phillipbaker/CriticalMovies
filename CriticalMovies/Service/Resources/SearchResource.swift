@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct SearchResource: ApiResource {
+struct SearchResource: APIResource {
     typealias ModelType = Movie
 
     var offset: Int
     var reviewer: String?
     var searchQuery: String?
-    var methodPath: String { return ApiConstant.searchPath }
+    var methodPath: String { return APIConstant.searchPath }
 }

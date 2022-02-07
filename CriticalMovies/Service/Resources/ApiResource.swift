@@ -1,5 +1,5 @@
 //
-//  ApiResource.swift
+//  APIResource.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/19/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ApiResource {
+protocol APIResource {
     associatedtype ModelType: Decodable
     
     var offset: Int { get set }
@@ -16,13 +16,13 @@ protocol ApiResource {
     var methodPath: String { get }
 }
 
-extension ApiResource {
+extension APIResource {
     var url: URL {
-        var components = URLComponents(string: ApiConstant.baseUrl)!
+        var components = URLComponents(string: APIConstant.baseUrl)!
         components.path = methodPath
         
         components.queryItems = [
-            URLQueryItem(name: "api-key", value: ApiConstant.apiKey),
+            URLQueryItem(name: "api-key", value: APIConstant.apiKey),
             URLQueryItem(name: "offset", value: String(offset))
         ]
         

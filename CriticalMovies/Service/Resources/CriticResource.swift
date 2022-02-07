@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct CriticResource: ApiResource {
+struct CriticResource: APIResource {
     typealias ModelType = Movie
 
     var offset: Int
     var reviewer: String?
     var searchQuery: String?
-    var methodPath: String { return ApiConstant.criticPath }
+    var methodPath: String { return APIConstant.criticPath }
 }

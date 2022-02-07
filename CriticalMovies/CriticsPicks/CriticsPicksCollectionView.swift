@@ -50,8 +50,8 @@ class CriticsPicksCollectionView: UIViewController {
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: Layout.criticsPicksLayout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.delegate = self
         view.addSubview(collectionView)
+        collectionView.delegate = self
     }
 
     private func configureDataSource() {
