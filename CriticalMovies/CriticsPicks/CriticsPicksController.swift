@@ -10,14 +10,17 @@ import UIKit
 class CriticsPicksController: UIViewController {
     var criticsPicksCollectionView: CriticsPicksCollectionView!
 
+    override func loadView() {
+        super.loadView()
+        criticsPicksCollectionView = CriticsPicksCollectionView()
+        criticsPicksCollectionView.delegate = self
+        addChildViewController(criticsPicksCollectionView)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Critics’ Picks"
         navigationController?.navigationBar.prefersLargeTitles = true
-
-        criticsPicksCollectionView = CriticsPicksCollectionView()
-        criticsPicksCollectionView.delegate = self
-        addChildViewController(criticsPicksCollectionView)
     }
 }
 

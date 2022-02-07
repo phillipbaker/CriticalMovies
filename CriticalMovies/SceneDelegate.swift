@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.selectedViewController = criticsPicksNC
         tabBarController.overrideUserInterfaceStyle = .dark
 
-        window?.tintColor = Color.gold
+        window?.tintColor = UIColor.gold
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }

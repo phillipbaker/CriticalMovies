@@ -60,7 +60,7 @@ class ResultCell: UICollectionViewCell {
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 8
         contentView.layer.cornerCurve = .continuous
-        contentView.backgroundColor = UIColor(named: "descriptionBackground")
+        contentView.backgroundColor = UIColor.descriptionBackground
         
         titleLabel.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
         titleLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

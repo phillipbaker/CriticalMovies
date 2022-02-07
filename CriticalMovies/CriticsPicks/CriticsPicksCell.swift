@@ -49,7 +49,7 @@ class CriticsPicksCell: UICollectionViewCell {
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 8
         contentView.layer.cornerCurve = .continuous
-        contentView.backgroundColor = UIColor(named: "descriptionBackground")
+        contentView.backgroundColor = UIColor.descriptionBackground
         
         let padding: CGFloat = 12
         

@@ -12,6 +12,7 @@ enum Image {
     static let search = UIImage(systemName: "magnifyingglass")
 }
 
-enum Color {
+extension UIColor {
     static let gold = UIColor(named: "gold")
+    static let descriptionBackground = UIColor(named: "descriptionBackground")
 }

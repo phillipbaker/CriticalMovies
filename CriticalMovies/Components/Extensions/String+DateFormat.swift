@@ -10,7 +10,7 @@ import Foundation
 extension String {
     func formatted() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy/MM/dd"
+        dateFormatter.dateFormat = "y/MM/d"
         let date = dateFormatter.date(from: self)
         guard let formattedString = date?.formatted(date: .abbreviated, time: .omitted) else { return "Unknown Date" }
         return formattedString
