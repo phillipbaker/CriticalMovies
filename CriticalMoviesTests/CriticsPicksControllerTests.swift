@@ -6,30 +6,53 @@
 //
 
 import XCTest
+@testable import CriticalMovies
 
 class CriticsPicksControllerTests: XCTestCase {
-
+    
+    // MARK: - Properties
+    
+    private var sut: CriticsPicksController!
+    
+    
+    // MARK: - Setup and Teardown
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
+        sut = CriticsPicksController()
+        sut.loadViewIfNeeded()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
+        try super.tearDownWithError()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    // MARK: - Tests
+    
+    func test_criticsPicksController_shouldLoad() {
+        XCTAssertNotNil(sut)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func test_criticsPicksController_shouldCreateCollectionView() {
+        XCTAssertNotNil(sut.collectionView)
     }
-
+    
+    func test_criticsPicksController_shouldAddChildCollectionView() {
+        XCTAssertNotNil(sut.children)
+    }
+    
+    func test_navigationTitle_shouldBeCriticsPicks() {
+        XCTAssertEqual(sut.navigationItem.title, "Critics’ Picks")
+    }
+    
+    func test_collectionViewLayout_shouldBeCriticsPicksLayout() {
+        XCTAssert(sut.collectionView.layout == Layout.criticsPicksLayout)
+    }
+    
+    func test_collectionViewDelegates_shouldBeConnected() {
+        XCTAssertNotNil(sut.collectionView.delegate, "collection view delegate")
+        XCTAssertNotNil(sut.collectionView.dataSource, "collection view dataSource")
+    }
 }

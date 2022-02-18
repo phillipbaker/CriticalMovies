@@ -8,32 +8,35 @@
 import UIKit
 
 class SearchController: UIViewController {
-    var searchQuery: String?
-    var searchController: UISearchController!
     var collectionView: MovieLoadingCollectionView<SearchResultCell>!
 
-    private lazy var errorLabel: UILabel = {
+    var searchQuery: String?
+    var searchController: UISearchController!
+
+    // TODO: - Do you need lazy for computed properties? Aren’t they lazy anyway?
+    private(set) lazy var errorLabel: UILabel = {
         let label = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .body)
         label.text = "Could not find any movies matching that search."
         return label
     }()
     
+    override func loadView() {
+        super.loadView()
+        collectionView = MovieLoadingCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
+        collectionView.delegate = self
+        addChildViewController(collectionView)
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
-    
-        collectionView = MovieLoadingCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
-        addChildViewController(collectionView)
-        collectionView.delegate = self
-        configureSearchController()
-    }
-
-    private func configureSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
+        
         searchController.searchBar.placeholder = "Search movies..."
         navigationItem.searchController = searchController
-        searchController.searchBar.delegate = self
     }
     
     private func layoutErrorLabel() {

@@ -10,6 +10,7 @@
 		F803BFCC27A02F540034330C /* SearchResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F803BFCB27A02F540034330C /* SearchResource.swift */; };
 		F810D01B27BFBD4600A864AC /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810D01A27BFBD4600A864AC /* MovieCell.swift */; };
 		F81BF02927542851004F55F0 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81BF02827542851004F55F0 /* SearchController.swift */; };
+		F81C31F227BFE69B005192AF /* SearchControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81C31F127BFE69B005192AF /* SearchControllerTests.swift */; };
 		F845CABD27AABBDB005EC3A9 /* MovieLoadingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F845CABC27AABBDB005EC3A9 /* MovieLoadingCollectionView.swift */; };
 		F8473EEC26F9E69000931D2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8473EEB26F9E69000931D2E /* AppDelegate.swift */; };
 		F8473EEE26F9E69000931D2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8473EED26F9E69000931D2E /* SceneDelegate.swift */; };
@@ -54,6 +55,7 @@
 		F803BFCB27A02F540034330C /* SearchResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResource.swift; sourceTree = "<group>"; };
 		F810D01A27BFBD4600A864AC /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		F81BF02827542851004F55F0 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		F81C31F127BFE69B005192AF /* SearchControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerTests.swift; sourceTree = "<group>"; };
 		F845CABC27AABBDB005EC3A9 /* MovieLoadingCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieLoadingCollectionView.swift; sourceTree = "<group>"; };
 		F8473EE826F9E69000931D2E /* CriticalMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CriticalMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8473EEB26F9E69000931D2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				F8C46B2027A83C5F004C0829 /* CriticsPicksControllerTests.swift */,
+				F81C31F127BFE69B005192AF /* SearchControllerTests.swift */,
 				F8FC3548270223110079834D /* TestHelpers.swift */,
 			);
 			path = CriticalMoviesTests;
@@ -377,6 +380,7 @@
 			files = (
 				F8C46B2127A83C5F004C0829 /* CriticsPicksControllerTests.swift in Sources */,
 				F8FC3549270223110079834D /* TestHelpers.swift in Sources */,
+				F81C31F227BFE69B005192AF /* SearchControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
