@@ -13,6 +13,5 @@ enum Image {
 }
 
 extension UIColor {
-    static let gold = UIColor(named: "gold")
     static let descriptionBackground = UIColor(named: "descriptionBackground")
 }

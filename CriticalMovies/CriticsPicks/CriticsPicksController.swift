@@ -8,13 +8,14 @@
 import UIKit
 
 class CriticsPicksController: UIViewController {
-    var criticsPicksCollectionView: CriticsPicksCollectionView!
-
+    var collectionView: MovieLoadingCollectionView<CriticsPicksCell>!
+    
     override func loadView() {
         super.loadView()
-        criticsPicksCollectionView = CriticsPicksCollectionView()
-        criticsPicksCollectionView.delegate = self
-        addChildViewController(criticsPicksCollectionView)
+        collectionView = MovieLoadingCollectionView(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout)
+        collectionView.delegate = self
+        addChildViewController(collectionView)
+        getMovies()
     }
     
     override func viewDidLoad() {
@@ -24,21 +25,21 @@ class CriticsPicksController: UIViewController {
     }
 }
 
-extension CriticsPicksController: CriticsPicksCollectionViewDelegate {
+extension CriticsPicksController: MovieLoadingCollectionViewDelegate {
     func getMovies() {
-        criticsPicksCollectionView.isLoading = true
+        collectionView.isLoading = true
 
-        let resource = CriticResource(offset: criticsPicksCollectionView.offset)
+        let resource = CriticResource(offset: collectionView.offset)
 
         MoviesService.shared.fetchMovies(from: resource.url) { [weak self] result in
             switch result {
             case .success(let result):
-                self?.criticsPicksCollectionView.updateUI(with: result.movies)
+                self?.collectionView.updateUI(with: result.movies)
             case .failure(let error):
                 print(error)
             }
 
-            self?.criticsPicksCollectionView.isLoading = false
+            self?.collectionView.isLoading = false
         }
     }
 

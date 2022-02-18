@@ -1,5 +1,5 @@
 //
-//  ResultCell.swift
+//  SearchResultCell.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/27/22.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class ResultCell: UICollectionViewCell {
+class SearchResultCell: UICollectionViewCell, MovieCell {
     private lazy var titleLabelTopConstraint =
         titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
     
-    private(set) var imageView = MovieImageView(frame: .zero)
+    var imageView = MovieImageView(frame: .zero)
     private(set) var titleLabel = UILabel.customLabel(withTextStyle: .headline)
     private(set) var descriptionLabel = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .callout)
     

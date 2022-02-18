@@ -10,7 +10,7 @@ import UIKit
 class SearchController: UIViewController {
     var searchQuery: String?
     var searchController: UISearchController!
-    var collectionView: ResultsCollectionView!
+    var collectionView: MovieLoadingCollectionView<SearchResultCell>!
 
     private lazy var errorLabel: UILabel = {
         let label = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .body)
@@ -23,9 +23,9 @@ class SearchController: UIViewController {
         navigationItem.title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
     
-        collectionView = ResultsCollectionView()
-        collectionView.delegate = self
+        collectionView = MovieLoadingCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
         addChildViewController(collectionView)
+        collectionView.delegate = self
         configureSearchController()
     }
 
@@ -33,7 +33,6 @@ class SearchController: UIViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search movies..."
         navigationItem.searchController = searchController
-        searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
     }
     
@@ -50,7 +49,7 @@ class SearchController: UIViewController {
     }
 }
 
-extension SearchController: UISearchBarDelegate, UISearchResultsUpdating {
+extension SearchController: UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         searchQuery = searchController.searchBar.text
     }
@@ -73,7 +72,7 @@ extension SearchController: UISearchBarDelegate, UISearchResultsUpdating {
     }
 }
 
-extension SearchController: ResultsCollectionViewDelegate {
+extension SearchController: MovieLoadingCollectionViewDelegate {
     func getMovies() {
         collectionView.isLoading = true
         

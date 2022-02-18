@@ -12,15 +12,15 @@ class LoadingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configure()
+        setupView()
     }
     
-    private func configure() {
+    private func setupView() {
         addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         

@@ -8,7 +8,10 @@
 import UIKit
 
 enum Layout {
-    static var criticsPicksLayout: UICollectionViewLayout = {
+    
+    // MARK: - Critics Picks Layout
+    
+    static var criticsPicksLayout: UICollectionViewCompositionalLayout = {
         let sectionProvider = { (_: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
             let section: NSCollectionLayoutSection
@@ -27,7 +30,7 @@ enum Layout {
             section = NSCollectionLayoutSection(group: group)
             
             section.interGroupSpacing = 20
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
 
             section.boundarySupplementaryItems = Layout.createFooterSupplementaryItem()
 
@@ -39,7 +42,10 @@ enum Layout {
         return layout
     }()
     
-    static var resultsLayout: UICollectionViewLayout = {
+    
+    // MARK: - Search Results Layout
+    
+    static var resultsLayout: UICollectionViewCompositionalLayout = {
         let sectionProvider = {
             (_: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
@@ -59,7 +65,7 @@ enum Layout {
             section = NSCollectionLayoutSection(group: group)
             
             section.interGroupSpacing = 16
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
 
             section.boundarySupplementaryItems = Layout.createFooterSupplementaryItem()
 
@@ -70,6 +76,9 @@ enum Layout {
 
         return layout
     }()
+    
+    
+    // MARK: - Footer Supplementary View
     
     static func createFooterSupplementaryItem() -> [NSCollectionLayoutBoundarySupplementaryItem] {
         let footerItemSize = NSCollectionLayoutSize(

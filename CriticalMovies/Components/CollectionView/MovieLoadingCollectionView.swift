@@ -1,5 +1,5 @@
 //
-//  ResultsCollectionView.swift
+//  MovieLoadingCollectionView.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/27/22.
@@ -7,26 +7,37 @@
 
 import UIKit
 
-protocol ResultsCollectionViewDelegate: AnyObject {
+protocol MovieLoadingCollectionViewDelegate: AnyObject {
     func getMovies()
     func loadReview(for url: String)
     func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void)
 }
 
-class ResultsCollectionView: UIViewController {
+class MovieLoadingCollectionView<Cell: MovieCell>: UIViewController, UICollectionViewDelegate {
     enum Section { case main }
-
+    
+    var cell: Cell
+    var layout: UICollectionViewCompositionalLayout
+    var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
+    var collectionView: UICollectionView!
+    
     var offset = 0
     var movies: [Movie] = []
-    var dataSource: DataSource!
-    var collectionView: UICollectionView!
-    var isLoading = false { didSet { updateLoadingView() } }
     var loadingView = LoadingView()
+    var isLoading = false { didSet { updateLoadingView() } }
 
-    weak var delegate: ResultsCollectionViewDelegate?
-
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Movie>
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Movie>
+    weak var delegate: MovieLoadingCollectionViewDelegate?
+    
+    
+    init(cell: Cell, layout: UICollectionViewCompositionalLayout) {
+        self.cell = cell
+        self.layout = layout
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +51,7 @@ class ResultsCollectionView: UIViewController {
     }
 
     func updateData(movies: [Movie]) {
-        var snapshot = Snapshot()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
         snapshot.appendSections([.main])
         snapshot.appendItems(movies)
         DispatchQueue.main.async {
@@ -49,20 +60,20 @@ class ResultsCollectionView: UIViewController {
     }
 
     private func configureCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: Layout.resultsLayout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.delegate = self
         view.addSubview(collectionView)
     }
 
     private func configureDataSource() {
-        let resultCellRegistration = UICollectionView.CellRegistration<ResultCell, Movie> { cell, _, movie in
+        let cellRegistration = UICollectionView.CellRegistration<Cell, Movie> { cell, _, movie in
             cell.imageView.delegate = self
             cell.displayContent(for: movie)
         }
 
-        dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier -> UICollectionViewCell? in
-            collectionView.dequeueConfiguredReusableCell(using: resultCellRegistration, for: indexPath, item: itemIdentifier)
+        dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: collectionView) { collectionView, indexPath, itemIdentifier -> UICollectionViewCell? in
+            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
         }
 
         let footerRegistration = UICollectionView.SupplementaryRegistration(elementKind: "spinner") { supplementaryView, _, _ in
@@ -90,9 +101,7 @@ class ResultsCollectionView: UIViewController {
             DispatchQueue.main.async { self.loadingView.isHidden = true }
         }
     }
-}
-
-extension ResultsCollectionView: UICollectionViewDelegate {
+    
     // MARK: - Load Review in Web View
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -108,7 +117,7 @@ extension ResultsCollectionView: UICollectionViewDelegate {
 
         let height = scrollView.frame.size.height
 
-        // Without movies not empty check, pulling down (as in to refresh) calls getMovies because contentOffset.y begins as .zero
+        // If movies is empty, pulling down (to refresh) calls getMovies because contentOffset.y starting value is .zero
         if !movies.isEmpty, scrollPosition > contentHeight - height {
             guard !isLoading else { return }
             offset += 20
@@ -117,7 +126,7 @@ extension ResultsCollectionView: UICollectionViewDelegate {
     }
 }
 
-extension ResultsCollectionView: MovieImageViewDelegate {
+extension MovieLoadingCollectionView: MovieImageViewDelegate {
     func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) {
         delegate?.downloadImage(from: url, withCompletion: completion)
     }

@@ -16,15 +16,15 @@ class MovieImageView: UIImageView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configure()
+        setupView()
     }
     
-    private func configure() {
+    private func setupView() {
         clipsToBounds = true
         contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false

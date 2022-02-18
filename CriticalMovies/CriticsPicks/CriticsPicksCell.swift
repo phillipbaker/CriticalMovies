@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class CriticsPicksCell: UICollectionViewCell {
-    private(set) var imageView = MovieImageView(frame: .zero)
+class CriticsPicksCell: UICollectionViewCell, MovieCell {
+    var imageView = MovieImageView(frame: .zero)
     private(set) var titleLabel = UILabel.customLabel(withTextStyle: .title2)
     private(set) var descriptionLabel = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .body)
     private(set) var dateLabel = UILabel.customLabel(withTextColor: .tintColor, withTextStyle: .caption1)
