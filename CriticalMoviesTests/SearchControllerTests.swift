@@ -39,6 +39,15 @@ class SearchControllerTests: XCTestCase {
         XCTAssertEqual(sut.navigationItem.title, "Search")
     }
     
+    func test_navigationTitle_shouldPreferLargeTitles() {
+        guard let navigationController = sut.navigationController else {
+            print("navigation controller is nil")
+            return
+        }
+
+        XCTAssert(navigationController.navigationBar.prefersLargeTitles == true)
+    }
+    
     
     // MARK: - Error Label Tests
     

@@ -47,6 +47,15 @@ class CriticsPicksControllerTests: XCTestCase {
         XCTAssertEqual(sut.navigationItem.title, "Critics’ Picks")
     }
     
+    func test_navigationTitle_shouldPreferLargeTitles() {
+        guard let navigationController = sut.navigationController else {
+            print("navigation controller is nil")
+            return
+        }
+        
+        XCTAssert(navigationController.navigationBar.prefersLargeTitles == true)
+    }
+    
     func test_collectionViewLayout_shouldBeCriticsPicksLayout() {
         XCTAssert(sut.collectionView.layout == Layout.criticsPicksLayout)
     }
