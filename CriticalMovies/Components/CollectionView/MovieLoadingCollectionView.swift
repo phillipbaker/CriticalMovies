@@ -13,7 +13,7 @@ protocol MovieLoadingCollectionViewDelegate: AnyObject {
     func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void)
 }
 
-class MovieLoadingCollectionView<Cell: MovieCell>: UIViewController, UICollectionViewDelegate {
+class MovieLoadingCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionViewDelegate {
     enum Section { case main }
     
     var cell: Cell
@@ -23,8 +23,6 @@ class MovieLoadingCollectionView<Cell: MovieCell>: UIViewController, UICollectio
     
     var offset = 0
     var movies: [Movie] = []
-    var loadingView = LoadingView()
-    var isLoading = false { didSet { updateLoadingView() } }
 
     weak var delegate: MovieLoadingCollectionViewDelegate?
     
@@ -78,7 +76,6 @@ class MovieLoadingCollectionView<Cell: MovieCell>: UIViewController, UICollectio
 
         let footerRegistration = UICollectionView.SupplementaryRegistration(elementKind: "spinner") { supplementaryView, _, _ in
             supplementaryView.addSubview(self.loadingView)
-            self.loadingView.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
                 self.loadingView.centerXAnchor.constraint(equalTo: supplementaryView.centerXAnchor),
@@ -92,14 +89,6 @@ class MovieLoadingCollectionView<Cell: MovieCell>: UIViewController, UICollectio
         }
 
         collectionView.dataSource = dataSource
-    }
-
-    private func updateLoadingView() {
-        if isLoading {
-            DispatchQueue.main.async { self.loadingView.isHidden = false }
-        } else {
-            DispatchQueue.main.async { self.loadingView.isHidden = true }
-        }
     }
     
     // MARK: - Load Review in Web View
