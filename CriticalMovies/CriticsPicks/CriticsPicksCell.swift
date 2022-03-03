@@ -10,10 +10,11 @@ import UIKit
 
 class CriticsPicksCell: UICollectionViewCell, MovieCell {
     var imageView = MovieImageView(frame: .zero)
-    private(set) var titleLabel = UILabel.customLabel(withTextStyle: .title2)
-    private(set) var descriptionLabel = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .body)
-    private(set) var dateLabel = UILabel.customLabel(withTextColor: .tintColor, withTextStyle: .caption1)
-    private(set) var reviewerLabel = UILabel.customLabel(withTextColor: .tintColor, withTextStyle: .caption1)
+    
+    private(set) var titleLabel = UILabel.makeTitleLabel()
+    private(set) var dateLabel = UILabel.makeCaptionLabel()
+    private(set) var reviewerLabel = UILabel.makeCaptionLabel()
+    private(set) var descriptionLabel = UILabel.makeSecondaryBodyLabel()
         
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [reviewerLabel, dateLabel])

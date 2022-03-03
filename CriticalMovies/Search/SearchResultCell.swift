@@ -8,20 +8,14 @@
 import UIKit
 
 class SearchResultCell: UICollectionViewCell, MovieCell {
-    private lazy var titleLabelTopConstraint =
-        titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
-    
     var imageView = MovieImageView(frame: .zero)
-    private(set) var titleLabel = UILabel.customLabel(withTextStyle: .headline)
-    private(set) var descriptionLabel = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .callout)
     
-    private(set) var criticsPickLabel: UILabel = {
-        let label = UILabel.customLabel(withTextColor: .tintColor, withTextStyle: .caption1)
-        label.font = label.font.bold()
-        label.text = "Critic’s Pick"
-        return label
-    }()
-  
+    private(set) var titleLabel = UILabel.makeHeadlineLabel()
+    private(set) var criticsPickLabel = UILabel.makeBoldCaptionLabel()
+    private(set) var descriptionLabel = UILabel.makeSecondaryCalloutLabel()
+    
+    private(set) lazy var titleLabelTopConstraint = titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

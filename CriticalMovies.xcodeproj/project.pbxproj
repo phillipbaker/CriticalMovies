@@ -31,7 +31,7 @@
 		F8C43DF0279EE3DD009252A0 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DEF279EE3DD009252A0 /* Link.swift */; };
 		F8C43DF2279EE3F1009252A0 /* Multimedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DF1279EE3F1009252A0 /* Multimedia.swift */; };
 		F8C43DF4279EF688009252A0 /* MoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DF3279EF688009252A0 /* MoviesService.swift */; };
-		F8C46B1D27A7EF20004C0829 /* UILabel+CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B1C27A7EF20004C0829 /* UILabel+CustomLabel.swift */; };
+		F8C46B1D27A7EF20004C0829 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B1C27A7EF20004C0829 /* UILabel.swift */; };
 		F8C46B1F27A7FBAD004C0829 /* String+DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B1E27A7FBAD004C0829 /* String+DateFormat.swift */; };
 		F8C46B2127A83C5F004C0829 /* CriticsPicksControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B2027A83C5F004C0829 /* CriticsPicksControllerTests.swift */; };
 		F8EC48D727A29E52002DB12E /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EC48D627A29E52002DB12E /* Layout.swift */; };
@@ -78,7 +78,7 @@
 		F8C43DEF279EE3DD009252A0 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		F8C43DF1279EE3F1009252A0 /* Multimedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multimedia.swift; sourceTree = "<group>"; };
 		F8C43DF3279EF688009252A0 /* MoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService.swift; sourceTree = "<group>"; };
-		F8C46B1C27A7EF20004C0829 /* UILabel+CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+CustomLabel.swift"; sourceTree = "<group>"; };
+		F8C46B1C27A7EF20004C0829 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		F8C46B1E27A7FBAD004C0829 /* String+DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DateFormat.swift"; sourceTree = "<group>"; };
 		F8C46B2027A83C5F004C0829 /* CriticsPicksControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriticsPicksControllerTests.swift; sourceTree = "<group>"; };
 		F8EC48D627A29E52002DB12E /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
@@ -206,9 +206,9 @@
 		F8C8DC3A2701D31800879DDC /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F8C46B1C27A7EF20004C0829 /* UILabel.swift */,
 				F8C46B1E27A7FBAD004C0829 /* String+DateFormat.swift */,
 				F8BC0F9A278EF34000700353 /* UIFont+ScaledTraits.swift */,
-				F8C46B1C27A7EF20004C0829 /* UILabel+CustomLabel.swift */,
 				F8EC48DE27A328A5002DB12E /* UIViewController+Child.swift */,
 			);
 			path = Extensions;
@@ -347,7 +347,7 @@
 				F8473EF026F9E69000931D2E /* CriticsPicksController.swift in Sources */,
 				F89D2F4127982D7D00528F50 /* APIResource.swift in Sources */,
 				F810D01B27BFBD4600A864AC /* MovieCell.swift in Sources */,
-				F8C46B1D27A7EF20004C0829 /* UILabel+CustomLabel.swift in Sources */,
+				F8C46B1D27A7EF20004C0829 /* UILabel.swift in Sources */,
 				F8A3053C26FB41E900837257 /* CriticsPicksCell.swift in Sources */,
 				F8EC48DD27A31689002DB12E /* SearchResultCell.swift in Sources */,
 				F8C43DF2279EE3F1009252A0 /* Multimedia.swift in Sources */,
