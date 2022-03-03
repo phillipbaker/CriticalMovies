@@ -1,5 +1,5 @@
 //
-//  MovieLoadingCollectionView.swift
+//  MovieCollectionView.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/27/22.
@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol MovieLoadingCollectionViewDelegate: AnyObject {
-    func getMovies()
-    func loadReview(for url: String)
-    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void)
-}
-
-class MovieLoadingCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionViewDelegate {
+class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionViewDelegate {
     enum Section { case main }
     
     var cell: Cell
@@ -24,7 +18,7 @@ class MovieLoadingCollectionView<Cell: MovieCell>: LoadingViewController, UIColl
     var offset = 0
     var movies: [Movie] = []
 
-    weak var delegate: MovieLoadingCollectionViewDelegate?
+    weak var delegate: MovieCollectionViewDelegate?
     
     
     init(cell: Cell, layout: UICollectionViewCompositionalLayout) {
@@ -115,7 +109,7 @@ class MovieLoadingCollectionView<Cell: MovieCell>: LoadingViewController, UIColl
     }
 }
 
-extension MovieLoadingCollectionView: MovieImageViewDelegate {
+extension MovieCollectionView: MovieImageViewDelegate {
     func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) {
         delegate?.downloadImage(from: url, withCompletion: completion)
     }

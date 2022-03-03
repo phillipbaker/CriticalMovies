@@ -8,11 +8,11 @@
 import UIKit
 
 class CriticsPicksController: UIViewController {
-    var collectionView: MovieLoadingCollectionView<CriticsPicksCell>!
+    var collectionView: MovieCollectionView<CriticsPicksCell>!
     
     override func loadView() {
         super.loadView()
-        collectionView = MovieLoadingCollectionView(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout)
+        collectionView = MovieCollectionView(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout)
         collectionView.delegate = self
         addChildViewController(collectionView)
         getMovies()
@@ -25,7 +25,7 @@ class CriticsPicksController: UIViewController {
     }
 }
 
-extension CriticsPicksController: MovieLoadingCollectionViewDelegate {
+extension CriticsPicksController: MovieCollectionViewDelegate {
     func getMovies() {
         collectionView.isLoading = true
 
@@ -47,9 +47,5 @@ extension CriticsPicksController: MovieLoadingCollectionViewDelegate {
         let webVC = WebView(url: url)
         let navVC = UINavigationController(rootViewController: webVC)
         present(navVC, animated: true)
-    }
-
-    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) {
-        MoviesService.shared.downloadImage(from: url, withCompletion: completion)
     }
 }

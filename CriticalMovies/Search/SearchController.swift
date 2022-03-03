@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchController: UIViewController {
-    var collectionView: MovieLoadingCollectionView<SearchResultCell>!
+    var collectionView: MovieCollectionView<SearchResultCell>!
 
     var searchQuery: String?
     var searchController: UISearchController!
@@ -22,7 +22,7 @@ class SearchController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        collectionView = MovieLoadingCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
+        collectionView = MovieCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
         collectionView.delegate = self
         addChildViewController(collectionView)
         
@@ -75,7 +75,7 @@ extension SearchController: UISearchBarDelegate {
     }
 }
 
-extension SearchController: MovieLoadingCollectionViewDelegate {
+extension SearchController: MovieCollectionViewDelegate {
     func getMovies() {
         collectionView.isLoading = true
         
@@ -98,9 +98,5 @@ extension SearchController: MovieLoadingCollectionViewDelegate {
         let webVC = WebView(url: url)
         let navVC = UINavigationController(rootViewController: webVC)
         present(navVC, animated: true)
-    }
-    
-    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) {
-        MoviesService.shared.downloadImage(from: url, withCompletion: completion)
     }
 }
