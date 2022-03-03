@@ -5,15 +5,13 @@
 //  Created by Phillip Baker on 2/18/22.
 //
 
-import XCTest
 @testable import CriticalMovies
+import XCTest
 
 class SearchControllerTests: XCTestCase {
-    
     // MARK: - Properties
     
     private var sut: SearchController!
-    
     
     // MARK: - Setup and Teardown
     
@@ -28,7 +26,6 @@ class SearchControllerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    
     // MARK: - View Controller Tests
     
     func test_searchController_ShouldLoad() {
@@ -48,7 +45,6 @@ class SearchControllerTests: XCTestCase {
         XCTAssert(navigationController.navigationBar.prefersLargeTitles == true)
     }
     
-    
     // MARK: - Error Label Tests
     
     func test_searchController_shouldLoadErrorLabel() {
@@ -66,7 +62,6 @@ class SearchControllerTests: XCTestCase {
     func test_errorLabelText_shouldBeCouldNotFindMovies() {
         XCTAssertEqual(sut.errorLabel.text, "Could not find any movies matching that search.")
     }
-    
     
     // MARK: - Search Tests
     
@@ -89,7 +84,6 @@ class SearchControllerTests: XCTestCase {
     func test_searchBarPlaceholderText_ShouldBeSearchMovies() {
         XCTAssertEqual(sut.searchController.searchBar.placeholder, "Search movies...")
     }
-    
     
     // MARK: - Collection View Tests
     

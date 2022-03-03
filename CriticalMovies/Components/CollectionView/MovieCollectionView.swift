@@ -9,24 +9,24 @@ import UIKit
 
 class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionViewDelegate {
     enum Section { case main }
-    
+
     var cell: Cell
     var layout: UICollectionViewCompositionalLayout
     var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
     var collectionView: UICollectionView!
-    
+
     var offset = 0
     var movies: [Movie] = []
 
     weak var delegate: MovieCollectionViewDelegate?
-    
-    
+
     init(cell: Cell, layout: UICollectionViewCompositionalLayout) {
         self.cell = cell
         self.layout = layout
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,7 +84,7 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
 
         collectionView.dataSource = dataSource
     }
-    
+
     // MARK: - Load Review in Web View
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

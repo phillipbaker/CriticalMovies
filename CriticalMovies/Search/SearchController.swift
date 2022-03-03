@@ -13,7 +13,6 @@ class SearchController: UIViewController {
     var searchQuery: String?
     var searchController: UISearchController!
 
-    // TODO: - Do you need lazy for computed properties? Aren’t they lazy anyway?
     private(set) lazy var errorLabel: UILabel = {
         let label = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .body)
         label.text = "Could not find any movies matching that search."

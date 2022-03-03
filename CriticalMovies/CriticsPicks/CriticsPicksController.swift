@@ -9,7 +9,7 @@ import UIKit
 
 class CriticsPicksController: UIViewController {
     var collectionView: MovieCollectionView<CriticsPicksCell>!
-    
+
     override func loadView() {
         super.loadView()
         collectionView = MovieCollectionView(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout)
@@ -17,7 +17,7 @@ class CriticsPicksController: UIViewController {
         addChildViewController(collectionView)
         getMovies()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Critics’ Picks"

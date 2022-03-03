@@ -5,15 +5,13 @@
 //  Created by Phillip Baker on 1/31/22.
 //
 
-import XCTest
 @testable import CriticalMovies
+import XCTest
 
 class CriticsPicksControllerTests: XCTestCase {
-    
     // MARK: - Properties
     
     private var sut: CriticsPicksController!
-    
     
     // MARK: - Setup and Teardown
     
@@ -28,7 +26,6 @@ class CriticsPicksControllerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    
     // MARK: - Tests
     
     func test_criticsPicksController_shouldLoad() {

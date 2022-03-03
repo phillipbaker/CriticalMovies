@@ -8,7 +8,6 @@
 import UIKit
 
 enum Layout {
-    
     // MARK: - Critics Picks Layout
     
     static var criticsPicksLayout: UICollectionViewCompositionalLayout = {
@@ -41,7 +40,6 @@ enum Layout {
 
         return layout
     }()
-    
     
     // MARK: - Search Results Layout
     
@@ -76,7 +74,6 @@ enum Layout {
 
         return layout
     }()
-    
     
     // MARK: - Footer Supplementary View
     
