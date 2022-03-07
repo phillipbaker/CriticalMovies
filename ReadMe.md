@@ -1,6 +1,6 @@
 # Critical Movies
 
- An iOS app that displays New York Times movie reviews with a focus on Critics’ Picks.
+ An iOS app that displays New York Times movie reviews with a focus on those awarded a Critic’s Pick.
  
  ![cm@3x](https://user-images.githubusercontent.com/16352712/157089401-8dbd284f-833e-40b0-99b8-8addfe89fe11.png)
 
