@@ -14,7 +14,7 @@ class SearchController: UIViewController {
     var searchController: UISearchController!
 
     private(set) lazy var errorLabel: UILabel = {
-        let label = UILabel.customLabel(withTextColor: .secondaryLabel, withTextStyle: .body)
+        let label = UILabel.makeLabel(withTextStyle: .body, andTextColor: .secondaryLabel)
         label.text = "Could not find any movies matching that search."
         return label
     }()

@@ -9,19 +9,14 @@ import Foundation
 import UIKit
 
 class CriticsPicksCell: UICollectionViewCell, MovieCell {
+   
     var imageView = MovieImageView(frame: .zero)
     
-    private(set) var titleLabel = UILabel.makeTitleLabel()
-    private(set) var dateLabel = UILabel.makeCaptionLabel()
-    private(set) var reviewerLabel = UILabel.makeCaptionLabel()
-    private(set) var descriptionLabel = UILabel.makeSecondaryBodyLabel()
-        
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [reviewerLabel, dateLabel])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .equalSpacing
-        return stackView
-    }()
+    private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .title2)
+    private(set) var dateLabel = UILabel.makeLabel(withTextStyle: .caption1, andTextColor: .tintColor)
+    private(set) var reviewerLabel = UILabel.makeLabel(withTextStyle: .caption1, andTextColor: .tintColor)
+    private(set) var descriptionLabel = UILabel.makeLabel(withTextStyle: .body, andTextColor: .secondaryLabel)
+    private(set) lazy var stackView: UIStackView = makeStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,6 +34,13 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
         descriptionLabel.text = movie.summary
         dateLabel.text = movie.publicationDate.formatted().uppercased()
         reviewerLabel.text = "by \(movie.byline.uppercased())"
+    }
+    
+    private func makeStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [reviewerLabel, dateLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .equalSpacing
+        return stackView
     }
     
     private func setupView() {

@@ -10,11 +10,10 @@ import UIKit
 class SearchResultCell: UICollectionViewCell, MovieCell {
     var imageView = MovieImageView(frame: .zero)
     
-    private(set) var titleLabel = UILabel.makeHeadlineLabel()
-    private(set) var criticsPickLabel = UILabel.makeBoldCaptionLabel()
-    private(set) var descriptionLabel = UILabel.makeSecondaryCalloutLabel()
-    
-    private(set) lazy var titleLabelTopConstraint = titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
+    private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .headline)
+    private(set) var descriptionLabel = UILabel.makeLabel(withTextStyle: .callout, andTextColor: .secondaryLabel)
+    private(set) lazy var criticsPickLabel = makeCriticsPickLabel()
+    private(set) lazy var titleLabelTopConstraint = makeTitleLabelTopConstraint()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +43,18 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
             criticsPickLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             criticsPickLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8)
         ])
+    }
+    
+    private func makeCriticsPickLabel() -> UILabel {
+        let label = UILabel.makeLabel(withTextStyle: .caption1)
+        label.font = label.font.bold()
+        label.text = "Critic’s Pick"
+        return label
+    }
+    
+    private func makeTitleLabelTopConstraint() -> NSLayoutConstraint {
+        let constraint = titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
+        return constraint
     }
     
     private func setupView() {
