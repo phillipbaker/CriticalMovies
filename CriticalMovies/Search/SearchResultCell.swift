@@ -46,7 +46,7 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
     }
     
     private func makeCriticsPickLabel() -> UILabel {
-        let label = UILabel.makeLabel(withTextStyle: .caption1)
+        let label = UILabel.makeLabel(withTextStyle: .caption1, andTextColor: .tintColor)
         label.font = label.font.bold()
         label.text = "Critic’s Pick"
         return label
