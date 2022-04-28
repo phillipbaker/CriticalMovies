@@ -10,7 +10,7 @@ import UIKit
 class SearchController: UIViewController {
     var collectionView: MovieCollectionView<SearchResultCell>!
 
-    var searchQuery: String?
+    var searchQuery: String!
     var searchController: UISearchController!
 
     private(set) lazy var errorLabel: UILabel = {
@@ -34,6 +34,7 @@ class SearchController: UIViewController {
         navigationItem.title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        searchQuery = ""
         searchController.searchBar.placeholder = "Search movies..."
         navigationItem.searchController = searchController
     }
@@ -52,10 +53,6 @@ class SearchController: UIViewController {
 }
 
 extension SearchController: UISearchBarDelegate {
-    func updateSearchResults(for searchController: UISearchController) {
-        searchQuery = searchController.searchBar.text
-    }
-
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         getMovies()
     }
@@ -65,10 +62,14 @@ extension SearchController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchController.searchBar.text == "" { clearResults() }
+        if searchText == "" {
+            clearResults()
+        } else {
+            searchQuery = searchText
+        }
     }
     
-    func clearResults() {
+    private func clearResults() {
         collectionView.movies.removeAll()
         collectionView.updateUI(with: [])
     }
