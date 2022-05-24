@@ -29,7 +29,7 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
     }
     
     func displayContent(for movie: Movie) {
-        imageView.downloadImage(from: movie.multimedia.imageUrl)
+        imageView.downloadImage(from: movie.multimedia?.imageUrl)
         titleLabel.text = movie.title
         descriptionLabel.text = movie.summary
         dateLabel.text = movie.publicationDate.formatted().uppercased()

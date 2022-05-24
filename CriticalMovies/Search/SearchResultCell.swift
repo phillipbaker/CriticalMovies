@@ -8,8 +8,9 @@
 import UIKit
 
 class SearchResultCell: UICollectionViewCell, MovieCell {
-    var imageView = MovieImageView(frame: .zero)
     
+    var onReuse: () -> Void = {}
+    var imageView = MovieImageView(frame: .zero)
     private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .headline)
     private(set) var descriptionLabel = UILabel.makeLabel(withTextStyle: .callout, andTextColor: .secondaryLabel)
     private(set) lazy var criticsPickLabel = makeCriticsPickLabel()
@@ -25,14 +26,44 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
     }
     
     func displayContent(for movie: Movie) {
-        imageView.downloadImage(from: movie.multimedia.imageUrl)
+        fetchMovieImage(for: movie)
         titleLabel.text = movie.title
         descriptionLabel.text = movie.summary
         if movie.criticsPick == 1 { displayCriticsPickLabel() }
     }
     
+    private func fetchMovieImage(for movie: Movie) {
+        guard let imageUrl = movie.multimedia?.imageUrl else {
+            imageView.image = UIImage(named: "placeholder")
+            return
+        }
         
+        let token = MoviesService.shared.downloadImage(from: imageUrl) { result in
+            do {
+                let image = try result.get()
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            } catch {
+                print(error)
+                DispatchQueue.main.async {
+                    self.imageView.image = UIImage(named: "placeholder")
+                }
+            }
+        }
         
+        onReuse = {
+            if let token = token {
+                MoviesService.shared.cancelImageRequest(token)
+            }
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        onReuse()
+        imageView.image = nil
+        removeCriticsPickLabel()
     }
     
     private func makeCriticsPickLabel() -> UILabel {

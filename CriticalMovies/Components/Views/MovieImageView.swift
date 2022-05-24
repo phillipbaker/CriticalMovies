@@ -13,6 +13,12 @@ protocol MovieImageViewDelegate: AnyObject {
 
 class MovieImageView: UIImageView {
     weak var delegate: MovieImageViewDelegate?
+    
+    private lazy var placeholder: UIImage = {
+        let image = UIImage(named: "placeholder")!
+        self.contentMode = .scaleAspectFit
+        return image
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,13 +36,18 @@ class MovieImageView: UIImageView {
         translatesAutoresizingMaskIntoConstraints = false
     }
 
-    func downloadImage(from url: String) {
-        delegate?.downloadImage(from: url) { [weak self] result in
+    func downloadImage(from url: String?) {
+        guard let imageUrl = url else {
+            self.image = placeholder
+            return
+        }
+        
+        delegate?.downloadImage(from: imageUrl) { [weak self] result in
             switch result {
             case .success(let image):
                 DispatchQueue.main.async { self?.image = image }
             case .failure:
-                DispatchQueue.main.async { self?.image = Image.film }
+                DispatchQueue.main.async { self?.image = self?.placeholder }
             }
         }
     }

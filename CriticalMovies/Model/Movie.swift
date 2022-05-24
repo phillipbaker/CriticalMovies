@@ -16,7 +16,7 @@ struct Movie: Hashable {
     let summary: String
     let publicationDate: String
     let link: Link
-    let multimedia: Multimedia
+    let multimedia: Multimedia?
 
     static func == (lhs: Movie, rhs: Movie) -> Bool {
         return lhs.identifier == rhs.identifier
