@@ -13,7 +13,6 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
     private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .headline)
     private(set) var descriptionLabel = UILabel.makeLabel(withTextStyle: .callout, andTextColor: .secondaryLabel)
     private(set) lazy var criticsPickLabel = makeCriticsPickLabel()
-    private(set) lazy var titleLabelTopConstraint = makeTitleLabelTopConstraint()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,20 +28,11 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
         imageView.downloadImage(from: movie.multimedia.imageUrl)
         titleLabel.text = movie.title
         descriptionLabel.text = movie.summary
-        if movie.criticsPick == 1 { showCriticsPickView() }
+        if movie.criticsPick == 1 { displayCriticsPickLabel() }
     }
     
-    func showCriticsPickView() {
-        contentView.addSubview(criticsPickLabel)
         
-        NSLayoutConstraint.deactivate([titleLabelTopConstraint])
         
-        NSLayoutConstraint.activate([
-            criticsPickLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8),
-            criticsPickLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            criticsPickLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            criticsPickLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8)
-        ])
     }
     
     private func makeCriticsPickLabel() -> UILabel {
@@ -52,10 +42,30 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
         return label
     }
     
-    private func makeTitleLabelTopConstraint() -> NSLayoutConstraint {
-        let constraint = titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
-        return constraint
+    private func displayCriticsPickLabel() {
+        contentView.addSubview(criticsPickLabel)
+        titleLabelTopConstraint.isActive = false
+        NSLayoutConstraint.activate(criticsPickConstraints)
     }
+    
+    private func removeCriticsPickLabel() {
+        criticsPickLabel.removeFromSuperview()
+        titleLabelTopConstraint.isActive = true
+        NSLayoutConstraint.deactivate(criticsPickConstraints)
+    }
+    
+    private lazy var titleLabelTopConstraint: NSLayoutConstraint = {
+        return titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
+    }()
+    
+    private lazy var criticsPickConstraints: [NSLayoutConstraint] = {
+        return [
+            criticsPickLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8),
+            criticsPickLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            criticsPickLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            criticsPickLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8)
+        ]
+    }()
     
     private func setupView() {
         contentView.addSubview(imageView)
