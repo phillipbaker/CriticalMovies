@@ -34,7 +34,11 @@ extension CriticsPicksController: MovieCollectionViewDelegate {
         MoviesService.shared.fetchMovies(from: resource.url) { [weak self] result in
             switch result {
             case .success(let result):
-                self?.collectionView.updateUI(with: result.movies)
+                if let movies = result.movies {
+                    self?.collectionView.updateUI(with: movies)
+                } else {
+                    self?.collectionView.hasMoreToLoad = false
+                }
             case .failure(let error):
                 print(error)
             }

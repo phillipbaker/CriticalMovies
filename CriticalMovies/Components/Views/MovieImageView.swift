@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol MovieImageViewDelegate: AnyObject {
-    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void)
-}
-
 class MovieImageView: UIImageView {
-    weak var delegate: MovieImageViewDelegate?
-    
     private lazy var placeholder: UIImage = {
         let image = UIImage(named: "placeholder")!
         self.contentMode = .scaleAspectFit
@@ -34,21 +28,5 @@ class MovieImageView: UIImageView {
         clipsToBounds = true
         contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func downloadImage(from url: String?) {
-        guard let imageUrl = url else {
-            self.image = placeholder
-            return
-        }
-        
-        delegate?.downloadImage(from: imageUrl) { [weak self] result in
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async { self?.image = image }
-            case .failure:
-                DispatchQueue.main.async { self?.image = self?.placeholder }
-            }
-        }
     }
 }

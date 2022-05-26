@@ -8,11 +8,9 @@
 import Foundation
 
 struct MovieResult: Decodable {
-    let movies: [Movie]
-    let hasMore: Bool
+    let movies: [Movie]?
 
     enum CodingKeys: String, CodingKey {
         case movies = "results"
-        case hasMore = "has_more"
     }
 }

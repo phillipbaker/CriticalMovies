@@ -45,24 +45,6 @@ class SearchControllerTests: XCTestCase {
         XCTAssert(navigationController.navigationBar.prefersLargeTitles == true)
     }
     
-    // MARK: - Error Label Tests
-    
-    func test_searchController_shouldLoadErrorLabel() {
-        XCTAssertNotNil(sut.errorLabel)
-    }
-    
-    func test_errorLabelTextColor_shouldBeSecondary() {
-        XCTAssertEqual(sut.errorLabel.textColor, .secondaryLabel)
-    }
-    
-    func test_errorLabelTextStyle_shouldBeBody() {
-        XCTAssert(sut.errorLabel.font == UIFont.preferredFont(forTextStyle: .body))
-    }
-    
-    func test_errorLabelText_shouldBeCouldNotFindMovies() {
-        XCTAssertEqual(sut.errorLabel.text, "Could not find any movies matching that search.")
-    }
-    
     // MARK: - Search Tests
     
     func test_searchController_shouldLoadSearchController() {

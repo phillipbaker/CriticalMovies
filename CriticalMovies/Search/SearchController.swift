@@ -9,15 +9,9 @@ import UIKit
 
 class SearchController: UIViewController {
     var collectionView: MovieCollectionView<SearchResultCell>!
-
+    
     var searchQuery: String!
     var searchController: UISearchController!
-
-    private(set) lazy var errorLabel: UILabel = {
-        let label = UILabel.makeLabel(withTextStyle: .body, andTextColor: .secondaryLabel)
-        label.text = "Could not find any movies matching that search."
-        return label
-    }()
     
     override func loadView() {
         super.loadView()
@@ -38,22 +32,11 @@ class SearchController: UIViewController {
         searchController.searchBar.placeholder = "Search movies..."
         navigationItem.searchController = searchController
     }
-    
-    private func layoutErrorLabel() {
-        view.addSubview(errorLabel)
-        errorLabel.isHidden = true
-        
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
 }
 
 extension SearchController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        clearResults()
         getMovies()
     }
     
@@ -70,6 +53,7 @@ extension SearchController: UISearchBarDelegate {
     }
     
     private func clearResults() {
+        collectionView.hasMoreToLoad = true
         collectionView.movies.removeAll()
         collectionView.updateUI(with: [])
     }
@@ -84,9 +68,12 @@ extension SearchController: MovieCollectionViewDelegate {
         MoviesService.shared.fetchMovies(from: resource.url) { [weak self] result in
             switch result {
             case .success(let result):
-                self?.collectionView.updateUI(with: result.movies)
+                if let movies = result.movies {
+                    self?.collectionView.updateUI(with: movies)
+                } else {
+                    self?.collectionView.hasMoreToLoad = false
+                }
             case .failure(let error):
-                self?.errorLabel.isHidden = false
                 print(error)
             }
             

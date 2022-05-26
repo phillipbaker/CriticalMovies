@@ -60,7 +60,6 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
 
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<Cell, Movie> { cell, _, movie in
-            cell.imageView.delegate = self
             cell.displayContent(for: movie)
         }
 
@@ -70,10 +69,18 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
 
         let footerRegistration = UICollectionView.SupplementaryRegistration(elementKind: "spinner") { supplementaryView, _, _ in
             supplementaryView.addSubview(self.loadingView)
+            supplementaryView.addSubview(self.noResultsLabel)
 
             NSLayoutConstraint.activate([
-                self.loadingView.centerXAnchor.constraint(equalTo: supplementaryView.centerXAnchor),
-                self.loadingView.centerYAnchor.constraint(equalTo: supplementaryView.centerYAnchor)
+                self.loadingView.topAnchor.constraint(equalTo: supplementaryView.topAnchor),
+                self.loadingView.leadingAnchor.constraint(equalTo: supplementaryView.leadingAnchor),
+                self.loadingView.trailingAnchor.constraint(equalTo: supplementaryView.trailingAnchor),
+                self.loadingView.bottomAnchor.constraint(greaterThanOrEqualTo: supplementaryView.bottomAnchor),
+
+                self.noResultsLabel.topAnchor.constraint(greaterThanOrEqualTo: supplementaryView.topAnchor),
+                self.noResultsLabel.leadingAnchor.constraint(equalTo: supplementaryView.leadingAnchor),
+                self.noResultsLabel.trailingAnchor.constraint(equalTo: supplementaryView.trailingAnchor),
+                self.noResultsLabel.centerYAnchor.constraint(equalTo: supplementaryView.centerYAnchor)
             ])
         }
 
@@ -102,15 +109,9 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
 
         // If movies is empty, pulling down (to refresh) calls getMovies because contentOffset.y starting value is .zero
         if !movies.isEmpty, scrollPosition > contentHeight - height {
-            guard !isLoading else { return }
+            guard hasMoreToLoad, !isLoading else { return }
             offset += 20
             delegate?.getMovies()
         }
-    }
-}
-
-extension MovieCollectionView: MovieImageViewDelegate {
-    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) {
-        delegate?.downloadImage(from: url, withCompletion: completion)
     }
 }
