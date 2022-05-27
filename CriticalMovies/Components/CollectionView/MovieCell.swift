@@ -9,5 +9,5 @@ import UIKit
 
 protocol MovieCell: UICollectionViewCell {
     func displayContent(for movie: Movie)
-    var imageView: MovieImageView { get set }
+    var imageView: UIImageView { get set }
 }

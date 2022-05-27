@@ -44,7 +44,7 @@ final class MoviesService {
     func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) -> UUID? {
         let cacheKey = NSString(string: url)
         
-        guard cache.object(forKey: cacheKey) != Image.film else { return nil }
+        guard cache.object(forKey: cacheKey) != MovieImage.placeholder else { return nil }
         
         if let image = cache.object(forKey: cacheKey) {
             completion(.success(image))

@@ -7,9 +7,17 @@
 
 import UIKit
 
-enum Image {
+enum SFSymbol {
     static let film = UIImage(systemName: "film")
     static let search = UIImage(systemName: "magnifyingglass")
+}
+
+enum MovieImage {
+    static var placeholder: UIImage = {
+        let configuration = UIImage.SymbolConfiguration(textStyle: .title1)
+        let image = UIImage(systemName: "film", withConfiguration: configuration)!
+        return image
+    }()
 }
 
 extension UIColor {

@@ -10,7 +10,7 @@ import UIKit
 class SearchResultCell: UICollectionViewCell, MovieCell {
     
     var onReuse: () -> Void = {}
-    var imageView = MovieImageView(frame: .zero)
+    var imageView = UIImageView.makeMovieImageView()
     private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .headline)
     private(set) var descriptionLabel = UILabel.makeLabel(withTextStyle: .callout, andTextColor: .secondaryLabel)
     private(set) lazy var criticsPickLabel = makeCriticsPickLabel()
@@ -33,37 +33,31 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
     }
     
     private func fetchMovieImage(for movie: Movie) {
-        guard let imageUrl = movie.multimedia?.imageUrl else {
-            imageView.image = UIImage(named: "placeholder")
-            return
-        }
+        // Image already set to placeholder so we just return (previously set image to placeholder then returned
+        guard let imageUrl = movie.multimedia?.imageUrl else { return }
         
+        // Not handling error because placeholder set on imageView and reset to placeholder in onReuse
         let token = MoviesService.shared.downloadImage(from: imageUrl) { result in
-            do {
-                let image = try result.get()
-                DispatchQueue.main.async {
-                    self.imageView.image = image
-                }
-            } catch {
-                print(error)
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(named: "placeholder")
-                }
+            let image = try? result.get()
+            
+            DispatchQueue.main.async {
+                self.imageView.image = image
+                self.imageView.contentMode = .scaleAspectFill
             }
         }
         
         onReuse = {
-            if let token = token {
-                MoviesService.shared.cancelImageRequest(token)
-            }
+            guard let token = token else { return }
+            MoviesService.shared.cancelImageRequest(token)
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         onReuse()
-        imageView.image = nil
         removeCriticsPickLabel()
+        imageView.image = MovieImage.placeholder
+        imageView.contentMode = .center
     }
     
     private func makeCriticsPickLabel() -> UILabel {
@@ -86,16 +80,14 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
     }
     
     private lazy var titleLabelTopConstraint: NSLayoutConstraint = {
-        return titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
+        titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8)
     }()
     
-    private lazy var criticsPickConstraints: [NSLayoutConstraint] = {
-        return [
-            criticsPickLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8),
-            criticsPickLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            criticsPickLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            criticsPickLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8)
-        ]
+    private lazy var criticsPickConstraints: [NSLayoutConstraint] = {[
+        criticsPickLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 8),
+        criticsPickLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+        criticsPickLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+        criticsPickLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8)]
     }()
     
     private func setupView() {

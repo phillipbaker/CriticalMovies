@@ -10,7 +10,7 @@ import UIKit
 
 class CriticsPicksCell: UICollectionViewCell, MovieCell {
     var onReuse: () -> Void = {}
-    var imageView = MovieImageView(frame: .zero)
+    var imageView = UIImageView.makeMovieImageView()
     
     private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .title2)
     private(set) var dateLabel = UILabel.makeLabel(withTextStyle: .caption1, andTextColor: .tintColor)
@@ -37,36 +37,30 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
     }
     
     private func fetchMovieImage(for movie: Movie) {
-        guard let imageUrl = movie.multimedia?.imageUrl else {
-            imageView.image = UIImage(named: "placeholder")
-            return
-        }
+        // Image already set to placeholder so we just return (previously set image to placeholder then returned
+        guard let imageUrl = movie.multimedia?.imageUrl else { return }
         
+        // using try? and not handling error because image set to placeholder on imageView and reset in prepareForReuse.
         let token = MoviesService.shared.downloadImage(from: imageUrl) { result in
-            do {
-                let image = try result.get()
-                DispatchQueue.main.async {
-                    self.imageView.image = image
-                }
-            } catch {
-                print(error)
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(named: "placeholder")
-                }
+            let image = try? result.get()
+            
+            DispatchQueue.main.async {
+                self.imageView.image = image
+                self.imageView.contentMode = .scaleAspectFill
             }
         }
         
         onReuse = {
-            if let token = token {
-                MoviesService.shared.cancelImageRequest(token)
-            }
+            guard let token = token else { return }
+            MoviesService.shared.cancelImageRequest(token)
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         onReuse()
-        imageView.image = nil
+        imageView.image = MovieImage.placeholder
+        imageView.contentMode = .center
     }
     
     private func makeStackView() -> UIStackView {

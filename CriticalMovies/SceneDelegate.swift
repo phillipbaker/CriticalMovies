@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let criticsPicksTabBarItem = UITabBarItem()
         criticsPicksTabBarItem.title = "Critics’ Picks"
-        criticsPicksTabBarItem.image = Image.film
+        criticsPicksTabBarItem.image = SFSymbol.film
         criticsPicksNC.tabBarItem = criticsPicksTabBarItem
 
         let searchVC = SearchController()
@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let searchTabBarItem = UITabBarItem()
         searchTabBarItem.title = "Search"
-        searchTabBarItem.image = Image.search
+        searchTabBarItem.image = SFSymbol.search
         searchVC.tabBarItem = searchTabBarItem
 
         tabBarController.viewControllers = [criticsPicksNC, searchNC]
