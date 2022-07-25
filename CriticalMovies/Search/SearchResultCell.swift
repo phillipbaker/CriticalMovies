@@ -33,10 +33,10 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
     }
     
     private func fetchMovieImage(for movie: Movie) {
-        // Image already set to placeholder so we just return (previously set image to placeholder then returned
+        /// Image set to placeholder by default so we just return.
         guard let imageUrl = movie.multimedia?.imageUrl else { return }
         
-        // Not handling error because placeholder set on imageView and reset to placeholder in onReuse
+        /// Using optional try because we set the image on imageView and reset to the placeholder in onReuse.
         let token = MoviesService.shared.downloadImage(from: imageUrl) { result in
             let image = try? result.get()
             

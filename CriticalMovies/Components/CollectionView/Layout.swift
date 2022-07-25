@@ -11,7 +11,9 @@ enum Layout {
     // MARK: - Critics Picks Layout
     
     static var criticsPicksLayout: UICollectionViewCompositionalLayout = {
-        let sectionProvider = { (_: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+        let sectionProvider = { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+                    
+            let columns = Layout.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
             
             let section: NSCollectionLayoutSection
             
@@ -23,7 +25,7 @@ enum Layout {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                    heightDimension: .estimated(500))
             
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
             group.interItemSpacing = .fixed(16)
             
             section = NSCollectionLayoutSection(group: group)
@@ -45,7 +47,9 @@ enum Layout {
     
     static var resultsLayout: UICollectionViewCompositionalLayout = {
         let sectionProvider = {
-            (_: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let columns = Layout.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
             
             let section: NSCollectionLayoutSection
             
@@ -57,7 +61,7 @@ enum Layout {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                    heightDimension: .estimated(50))
             
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
             group.interItemSpacing = .fixed(16)
             
             section = NSCollectionLayoutSection(group: group)
@@ -88,5 +92,20 @@ enum Layout {
             alignment: .bottom)
         
         return [footerSupplementaryItem]
+    }
+    
+    // MARK: - Column Count
+    
+    static func columnCount(for width: CGFloat) -> Int {
+        switch width {
+        case 1..<750:
+            return 1
+        case 750..<1150:
+            return 2
+        case 1150...:
+            return 3
+        default:
+            return 1
+        }
     }
 }
