@@ -18,16 +18,14 @@ class CriticsPicksControllerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        movieService = MovieService()
         
         sut = CriticsPicksController(
             collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
-            movieService: movieService
+            movieService: .init()
         )
     }
 
     override func tearDown() {
-        movieService = nil
         sut = nil
         super.tearDown()
     }
