@@ -8,33 +8,42 @@
 import Foundation
 
 protocol APIResource {
-    associatedtype ModelType: Decodable
-    
-    var offset: Int { get set }
-    var reviewer: String? { get set }
-    var searchQuery: String? { get set }
-    var methodPath: String { get }
+    var resourcePath: String { get }
+    var queryItems: [(String, String?)] { get }
 }
 
 extension APIResource {
-    var url: URL {
-        var components = URLComponents(string: APIConstant.baseUrl)!
-        components.path = methodPath
+    
+    var host: String { NYTimesAPI.host }
+    var scheme: String { NYTimesAPI.scheme }
+ 
+    var url: URL? {
+        var components = URLComponents()
         
-        components.queryItems = [
-            URLQueryItem(name: "api-key", value: APIConstant.apiKey),
-            URLQueryItem(name: "offset", value: String(offset))
-        ]
+        components.host = host
+        components.scheme = scheme
         
-        if let reviewer = reviewer {
-            components.queryItems?.append(URLQueryItem(name: "criticspick", value: "y"))
-            components.queryItems?.append(URLQueryItem(name: "reviewer", value: reviewer))
+        components.path = NYTimesAPI.sharedPath
+        components.path.append(resourcePath)
+        
+        components.queryItems = []
+        
+        let apiKey = URLQueryItem(name: NYTimesAPI.key.name, value: NYTimesAPI.key.value)
+        
+        components.queryItems?.append(apiKey)
+        components.queryItems?.append(contentsOf: resourceQueryItems)
+        
+        return components.url
+    }
+    
+    var resourceQueryItems: [URLQueryItem] {
+        var resourceQueryItems = [URLQueryItem]()
+        
+        for (name, value) in queryItems where value != nil {
+            let queryItem = URLQueryItem(name: name, value: value)
+            resourceQueryItems.append(queryItem)
         }
         
-        if let searchQuery = searchQuery {
-            components.queryItems?.append(URLQueryItem(name: "query", value: searchQuery))
-        }
-        
-        return components.url!
+        return resourceQueryItems
     }
 }

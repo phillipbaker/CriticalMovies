@@ -18,8 +18,8 @@ struct Movie: Hashable {
     let link: Link
     let multimedia: Multimedia?
 
-    static func == (lhs: Movie, rhs: Movie) -> Bool {
-        return lhs.identifier == rhs.identifier
+    static func ==(lhs: Movie, rhs: Movie) -> Bool {
+        return lhs.link == rhs.link
     }
 }
 

@@ -8,10 +8,15 @@
 import Foundation
 
 struct SearchResource: APIResource {
-    typealias ModelType = Movie
-
+    var resourcePath: String { NYTimesAPI.searchPath }
+    
+    var queryItems: [(String, String?)] {
+        [
+            ("offset", String(offset)),
+            ("query", searchQuery)
+        ]
+    }
+    
     var offset: Int
-    var reviewer: String?
     var searchQuery: String?
-    var methodPath: String { return APIConstant.searchPath }
 }

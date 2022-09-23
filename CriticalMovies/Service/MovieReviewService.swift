@@ -1,5 +1,5 @@
 //
-//  MoviesService.swift
+//  MovieReviewService.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/24/22.
@@ -7,11 +7,26 @@
 
 import UIKit
 
-final class MoviesService {
-    static let shared = MoviesService()
+protocol URLSessionProtocol {
+    func dataTask(with request: URLRequest, completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+}
+
+extension URLSession: URLSessionProtocol {}
+
+final class MovieReviewService {
+    private let cache = NSCache<NSString, UIImage>()
+    private var dataTask: URLSessionDataTask?
+    private var runningRequests = [UUID: URLSessionDataTask]()
     
-    func fetchMovies(from url: URL, withCompletion completion: @escaping (Result<MovieResult, MovieError>) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+    var session: URLSessionProtocol
+
+    init(session: URLSessionProtocol = URLSession.shared) {
+        self.session = session
+    }
+    
+    func loadMovieReviews(with request: URLRequest, withCompletion completion: @escaping (Result<MovieResult, APIError>) -> Void) {
+        
+        dataTask = session.dataTask(with: request) { data, response, error in
             if let _ = error {
                 completion(.failure(.invalidApiKey))
                 return
@@ -35,13 +50,10 @@ final class MoviesService {
             }
         }
         
-        task.resume()
+        dataTask?.resume()
     }
     
-    private let cache = NSCache<NSString, UIImage>()
-    private var runningRequests = [UUID: URLSessionDataTask]()
-    
-    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, MovieError>) -> Void) -> UUID? {
+    func downloadImage(from url: String, withCompletion completion: @escaping (Result<UIImage, APIError>) -> Void) -> UUID? {
         let cacheKey = NSString(string: url)
         
         guard cache.object(forKey: cacheKey) != MovieImage.placeholder else { return nil }
@@ -82,10 +94,9 @@ final class MoviesService {
         
         task.resume()
         
-        runningRequests[uuid] = task
+        runningRequests[uuid] = dataTask
         return uuid
     }
-    
     
     func cancelImageRequest(_ uuid: UUID) {
         runningRequests[uuid]?.cancel()

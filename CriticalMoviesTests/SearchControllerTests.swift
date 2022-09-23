@@ -15,15 +15,14 @@ class SearchControllerTests: XCTestCase {
     
     // MARK: - Setup and Teardown
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() {
+        super.setUp()
         sut = SearchController()
-        sut.loadViewIfNeeded()
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() {
         sut = nil
-        try super.tearDownWithError()
+        super.tearDown()
     }
 
     // MARK: - View Controller Tests
@@ -33,6 +32,8 @@ class SearchControllerTests: XCTestCase {
     }
     
     func test_navigationTitle_shouldBeSearch() {
+        sut.loadViewIfNeeded()
+        
         XCTAssertEqual(sut.navigationItem.title, "Search")
     }
     
@@ -45,18 +46,54 @@ class SearchControllerTests: XCTestCase {
         XCTAssert(navigationController.navigationBar.prefersLargeTitles == true)
     }
     
-    // MARK: - Search Tests
+    // MARK: - Collection View Tests
+    
+    func test_searchController_shouldCreateCollectionView() {
+        sut.loadViewIfNeeded()
+        
+        XCTAssertNotNil(sut.collectionView)
+    }
+    
+    func test_searchController_shouldAddChildCollectionView() {
+        XCTAssertNotNil(sut.children)
+    }
+    
+    func test_searchController_shouldConnectCollectionViewDelegate() {
+        sut.loadViewIfNeeded()
+        
+        XCTAssertNotNil(sut.collectionView.delegate, "collection view delegate")
+    }
+    
+    func test_searchController_shouldConnectCollectionViewDataSource() {
+        sut.loadViewIfNeeded()
+        
+        XCTAssertNotNil(sut.collectionView.dataSource, "collection view data source")
+    }
+
+    func test_collectionViewLayout_shouldBeSearchResultsLayout() {
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(sut.collectionView.layout, Layout.resultsLayout)
+    }
+    
+    // MARK: - Search Controller Tests
     
     func test_searchController_shouldLoadSearchController() {
+        sut.loadViewIfNeeded()
+        
         XCTAssertNotNil(sut.searchController)
     }
     
     func test_searchBarDelegate_shouldBeConnected() {
+        sut.loadViewIfNeeded()
+        
         XCTAssertNotNil(sut.searchController.searchBar.delegate, "search bar delegate")
     }
     
-    func test_searchQuery_shouldBeNil() {
-        XCTAssertNil(sut.searchQuery)
+    func test_searchQuery_shouldBeEmpty() {
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(sut.searchQuery, nil)
     }
     
     func test_navigationSearchController_ShouldBeSearchController() {
@@ -64,25 +101,12 @@ class SearchControllerTests: XCTestCase {
     }
     
     func test_searchBarPlaceholderText_ShouldBeSearchMovies() {
+        sut.loadViewIfNeeded()
+        
         XCTAssertEqual(sut.searchController.searchBar.placeholder, "Search movies...")
     }
     
-    // MARK: - Collection View Tests
+    // MARK: - Networking Tests
     
-    func test_searchController_shouldCreateCollectionView() {
-        XCTAssertNotNil(sut.collectionView)
-    }
     
-    func test_searchController_shouldAddChildCollectionView() {
-        XCTAssertNotNil(sut.children)
-    }
-
-    func test_collectionViewLayout_shouldBeSearchResultsLayout() {
-        XCTAssert(sut.collectionView.layout == Layout.resultsLayout)
-    }
-        
-    func test_collectionViewDelegates_shouldBeConnected() {
-        XCTAssertNotNil(sut.collectionView.delegate, "collection view delegate")
-        XCTAssertNotNil(sut.collectionView.dataSource, "collection view data source")
-    }
 }

@@ -16,7 +16,13 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
     var collectionView: UICollectionView!
 
     var offset = 0
-    var movies: [Movie] = []
+    var movies: [Movie] = [] {
+        didSet {
+            handleResults(movies)
+        }
+    }
+    
+    var handleResults: ([Movie]) -> Void = { _ in }
 
     weak var delegate: MovieCollectionViewDelegate?
 

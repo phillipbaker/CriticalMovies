@@ -11,6 +11,7 @@ import UIKit
 class CriticsPicksCell: UICollectionViewCell, MovieCell {
     var onReuse: () -> Void = {}
     var imageView = UIImageView.makeMovieImageView()
+    var movieReviewService = MovieReviewService()
     
     private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .title2)
     private(set) var dateLabel = UILabel.makeLabel(withTextStyle: .caption1, andTextColor: .tintColor)
@@ -41,7 +42,7 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
         guard let imageUrl = movie.multimedia?.imageUrl else { return }
         
         /// Using optional try because we set the image on imageView and reset to the placeholder in onReuse.
-        let token = MoviesService.shared.downloadImage(from: imageUrl) { result in
+        let token = movieReviewService.downloadImage(from: imageUrl) { result in
             let image = try? result.get()
             
             DispatchQueue.main.async {
@@ -52,7 +53,7 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
         
         onReuse = {
             guard let token = token else { return }
-            MoviesService.shared.cancelImageRequest(token)
+            self.movieReviewService.cancelImageRequest(token)
         }
     }
     

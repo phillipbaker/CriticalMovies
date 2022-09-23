@@ -9,12 +9,14 @@ import UIKit
 
 class SearchController: UIViewController {
     var collectionView: MovieCollectionView<SearchResultCell>!
+    var movieReviewService: MovieReviewService!
     
-    var searchQuery: String!
+    var searchQuery: String?
     var searchController: UISearchController!
     
     override func loadView() {
         super.loadView()
+        movieReviewService = MovieReviewService()
         collectionView = MovieCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
         collectionView.delegate = self
         addChildViewController(collectionView)
@@ -28,7 +30,7 @@ class SearchController: UIViewController {
         navigationItem.title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        searchQuery = ""
+//        searchQuery = ""
         searchController.searchBar.placeholder = "Search movies..."
         navigationItem.searchController = searchController
     }
@@ -65,7 +67,11 @@ extension SearchController: MovieCollectionViewDelegate {
         
         let resource = SearchResource(offset: collectionView.offset, searchQuery: searchQuery)
         
-        MoviesService.shared.fetchMovies(from: resource.url) { [weak self] result in
+        guard let resourceUrl = resource.url else { return }
+        
+        let request = URLRequest(url: resourceUrl)
+        
+        movieReviewService.loadMovieReviews(with: request) { [weak self] result in
             switch result {
             case .success(let result):
                 if let movies = result.movies {
