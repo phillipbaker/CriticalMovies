@@ -1,5 +1,5 @@
 //
-//  MovieReviewService.swift
+//  MovieService.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/24/22.
@@ -13,7 +13,7 @@ protocol URLSessionProtocol {
 
 extension URLSession: URLSessionProtocol {}
 
-final class MovieReviewService {
+final class MovieService {
     private let cache = NSCache<NSString, UIImage>()
     private var dataTask: URLSessionDataTask?
     private var runningRequests = [UUID: URLSessionDataTask]()

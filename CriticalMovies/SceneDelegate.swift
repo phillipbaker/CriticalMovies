@@ -15,9 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
 
-        let tabBarController = UITabBarController()
+        let movieService = MovieService()
 
-        let criticsPicksVC = CriticsPicksController()
+        let criticsPicksVC = CriticsPicksController(
+            collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
+            movieService: movieService
+        )
+        
         let criticsPicksNC = UINavigationController(rootViewController: criticsPicksVC)
 
         let criticsPicksTabBarItem = UITabBarItem()
@@ -25,7 +29,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         criticsPicksTabBarItem.image = SFSymbol.film
         criticsPicksNC.tabBarItem = criticsPicksTabBarItem
 
-        let searchVC = SearchController()
+        let searchVC = SearchController(
+            collectionView: .init(cell: SearchResultCell(), layout: Layout.resultsLayout),
+            movieService: movieService,
+            searchController: .init(searchResultsController: nil)
+        )
+        
         let searchNC = UINavigationController(rootViewController: searchVC)
 
         let searchTabBarItem = UITabBarItem()
@@ -33,6 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         searchTabBarItem.image = SFSymbol.search
         searchVC.tabBarItem = searchTabBarItem
 
+        let tabBarController = UITabBarController()
         tabBarController.viewControllers = [criticsPicksNC, searchNC]
         tabBarController.selectedViewController = criticsPicksNC
         tabBarController.overrideUserInterfaceStyle = .dark

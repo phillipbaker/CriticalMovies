@@ -8,20 +8,26 @@
 import UIKit
 
 class SearchController: UIViewController {
-    var collectionView: MovieCollectionView<SearchResultCell>!
-    var movieReviewService: MovieReviewService!
-    
+    var collectionView: MovieCollectionView<SearchResultCell>
+    var movieService: MovieService
+    var searchController: UISearchController
     var searchQuery: String?
-    var searchController: UISearchController!
+    
+    init(collectionView: MovieCollectionView<SearchResultCell>, movieService: MovieService, searchController: UISearchController) {
+        self.collectionView = collectionView
+        self.movieService = movieService
+        self.searchController = searchController
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         super.loadView()
-        movieReviewService = MovieReviewService()
-        collectionView = MovieCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout)
         collectionView.delegate = self
         addChildViewController(collectionView)
-        
-        searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
     }
     
@@ -30,7 +36,6 @@ class SearchController: UIViewController {
         navigationItem.title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-//        searchQuery = ""
         searchController.searchBar.placeholder = "Search movies..."
         navigationItem.searchController = searchController
     }
@@ -71,7 +76,7 @@ extension SearchController: MovieCollectionViewDelegate {
         
         let request = URLRequest(url: resourceUrl)
         
-        movieReviewService.loadMovieReviews(with: request) { [weak self] result in
+        movieService.loadMovieReviews(with: request) { [weak self] result in
             switch result {
             case .success(let result):
                 if let movies = result.movies {

@@ -12,15 +12,22 @@ class CriticsPicksControllerTests: XCTestCase {
     // MARK: - Properties
     
     private var sut: CriticsPicksController!
+    private var movieService: MovieService!
     
     // MARK: - Setup and Teardown
     
     override func setUp() {
         super.setUp()
-        sut = CriticsPicksController()
+        movieService = MovieService()
+        
+        sut = CriticsPicksController(
+            collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
+            movieService: movieService
+        )
     }
 
     override func tearDown() {
+        movieService = nil
         sut = nil
         super.tearDown()
     }
@@ -82,7 +89,7 @@ class CriticsPicksControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         let mockURLSession = MockURLSession()
-        sut.movieReviewService.session = mockURLSession
+        sut.movieService.session = mockURLSession
         
         let request = URLRequest(url: URL(string: "https://api.nytimes.com/svc/movies/v2/reviews/picks.json?api-key=7mZQQ5atRHInAGiRitXjfpiNhKqgCIKj&offset=0")!)
         
@@ -95,7 +102,7 @@ class CriticsPicksControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         let mockURLSession = MockURLSession()
-        sut.movieReviewService.session = mockURLSession
+        sut.movieService.session = mockURLSession
         
         sut.getMovies()
         
@@ -129,7 +136,7 @@ class CriticsPicksControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         let mockURLSession = MockURLSession()
-        sut.movieReviewService.session = mockURLSession
+        sut.movieService.session = mockURLSession
         
         sut.getMovies()
 

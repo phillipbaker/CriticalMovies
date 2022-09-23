@@ -8,13 +8,21 @@
 import UIKit
 
 class CriticsPicksController: UIViewController {
-    var collectionView: MovieCollectionView<CriticsPicksCell>!
-    var movieReviewService: MovieReviewService!
+    var collectionView: MovieCollectionView<CriticsPicksCell>
+    var movieService: MovieService
+    
+    init(collectionView: MovieCollectionView<CriticsPicksCell>, movieService: MovieService) {
+        self.collectionView = collectionView
+        self.movieService = movieService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         super.loadView()
-        collectionView = MovieCollectionView(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout)
-        movieReviewService = MovieReviewService()
         collectionView.delegate = self
         addChildViewController(collectionView)
         getMovies()
@@ -42,7 +50,7 @@ extension CriticsPicksController: MovieCollectionViewDelegate {
         guard let resourceUrl = resource.url else { return }
         let request = URLRequest(url: resourceUrl)
 
-        movieReviewService.loadMovieReviews(with: request) { [weak self] result in
+        movieService.loadMovieReviews(with: request) { [weak self] result in
             switch result {
             case .success(let result):
                 if let movies = result.movies {

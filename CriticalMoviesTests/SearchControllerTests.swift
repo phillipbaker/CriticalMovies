@@ -12,15 +12,22 @@ class SearchControllerTests: XCTestCase {
     // MARK: - Properties
     
     private var sut: SearchController!
+    private var movieService: MovieService!
     
     // MARK: - Setup and Teardown
     
     override func setUp() {
         super.setUp()
-        sut = SearchController()
+        movieService = MovieService()
+        sut = SearchController(
+            collectionView: .init(cell: SearchResultCell(), layout: Layout.resultsLayout),
+            movieService: movieService,
+            searchController: UISearchController(searchResultsController: nil)
+        )
     }
 
     override func tearDown() {
+        movieService = nil
         sut = nil
         super.tearDown()
     }
@@ -97,6 +104,8 @@ class SearchControllerTests: XCTestCase {
     }
     
     func test_navigationSearchController_ShouldBeSearchController() {
+        sut.loadViewIfNeeded()
+        
         XCTAssertEqual(sut.navigationItem.searchController, sut.searchController)
     }
     

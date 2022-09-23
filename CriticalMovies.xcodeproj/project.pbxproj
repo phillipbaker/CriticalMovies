@@ -32,7 +32,7 @@
 		F8BC0F9B278EF34000700353 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BC0F9A278EF34000700353 /* UIFont.swift */; };
 		F8C43DF0279EE3DD009252A0 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DEF279EE3DD009252A0 /* Link.swift */; };
 		F8C43DF2279EE3F1009252A0 /* Multimedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DF1279EE3F1009252A0 /* Multimedia.swift */; };
-		F8C43DF4279EF688009252A0 /* MovieReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DF3279EF688009252A0 /* MovieReviewService.swift */; };
+		F8C43DF4279EF688009252A0 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C43DF3279EF688009252A0 /* MovieService.swift */; };
 		F8C46B1D27A7EF20004C0829 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B1C27A7EF20004C0829 /* UILabel.swift */; };
 		F8C46B1F27A7FBAD004C0829 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B1E27A7FBAD004C0829 /* String.swift */; };
 		F8C46B2127A83C5F004C0829 /* CriticsPicksControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C46B2027A83C5F004C0829 /* CriticsPicksControllerTests.swift */; };
@@ -82,7 +82,7 @@
 		F8BC0F9A278EF34000700353 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		F8C43DEF279EE3DD009252A0 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		F8C43DF1279EE3F1009252A0 /* Multimedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multimedia.swift; sourceTree = "<group>"; };
-		F8C43DF3279EF688009252A0 /* MovieReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieReviewService.swift; sourceTree = "<group>"; };
+		F8C43DF3279EF688009252A0 /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
 		F8C46B1C27A7EF20004C0829 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		F8C46B1E27A7FBAD004C0829 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F8C46B2027A83C5F004C0829 /* CriticsPicksControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriticsPicksControllerTests.swift; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 			children = (
 				F8FC8CB228CCFBBD00878C99 /* NYTimesAPI.swift */,
 				F849F1B026FCA1FC008A2136 /* APIError.swift */,
-				F8C43DF3279EF688009252A0 /* MovieReviewService.swift */,
+				F8C43DF3279EF688009252A0 /* MovieService.swift */,
 				F8C43DED279AE42B009252A0 /* Resources */,
 			);
 			path = Service;
@@ -362,7 +362,7 @@
 				F8FC8CB328CCFBBD00878C99 /* NYTimesAPI.swift in Sources */,
 				F8C43DF2279EE3F1009252A0 /* Multimedia.swift in Sources */,
 				F8EC48DF27A328A5002DB12E /* UIViewController.swift in Sources */,
-				F8C43DF4279EF688009252A0 /* MovieReviewService.swift in Sources */,
+				F8C43DF4279EF688009252A0 /* MovieService.swift in Sources */,
 				F8473EEC26F9E69000931D2E /* AppDelegate.swift in Sources */,
 				F89D2F452798412A00528F50 /* CriticsPicksResource.swift in Sources */,
 				F845CABD27AABBDB005EC3A9 /* MovieCollectionView.swift in Sources */,
