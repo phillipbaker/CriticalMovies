@@ -9,13 +9,13 @@ import UIKit
 
 class SearchController: UIViewController {
     var collectionView: MovieCollectionView<SearchResultCell>
-    var movieService: MovieService
+    var dataService: DataService
     var searchController: UISearchController
     var searchQuery: String?
     
-    init(collectionView: MovieCollectionView<SearchResultCell>, movieService: MovieService, searchController: UISearchController) {
+    init(collectionView: MovieCollectionView<SearchResultCell>, dataService: DataService, searchController: UISearchController) {
         self.collectionView = collectionView
-        self.movieService = movieService
+        self.dataService = dataService
         self.searchController = searchController
         super.init(nibName: nil, bundle: nil)
     }
@@ -72,11 +72,7 @@ extension SearchController: MovieCollectionViewDelegate {
         
         let resource = SearchResource(offset: collectionView.offset, searchQuery: searchQuery)
         
-        guard let resourceUrl = resource.url else { return }
-        
-        let request = URLRequest(url: resourceUrl)
-        
-        movieService.loadMovieReviews(with: request) { [weak self] result in
+        dataService.load(resource) { [weak self] result in
             switch result {
             case .success(let result):
                 if let movies = result.movies {

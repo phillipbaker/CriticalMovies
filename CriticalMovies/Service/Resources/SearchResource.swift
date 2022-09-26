@@ -8,7 +8,7 @@
 import Foundation
 
 struct SearchResource: APIResource {
-    var resourcePath: String { NYTimesAPI.searchPath }
+    var resourcePath: String { "/search.json" }
     
     var queryItems: [(String, String?)] {
         [

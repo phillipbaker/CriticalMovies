@@ -1,5 +1,5 @@
 //
-//  APIError.swift
+//  NetworkingError.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 9/23/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIError: String, Error {
+enum NetworkingError: String, Error {
     case invalidUrl = "Invalid URL"
     case invalidApiKey = "Invalid API Key"
     case invalidResponse = "Unable to Load Movies"

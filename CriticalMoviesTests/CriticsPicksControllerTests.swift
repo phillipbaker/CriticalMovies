@@ -12,7 +12,7 @@ class CriticsPicksControllerTests: XCTestCase {
     // MARK: - Properties
     
     private var sut: CriticsPicksController!
-    private var movieService: MovieService!
+    private var dataService: DataService!
     
     // MARK: - Setup and Teardown
     
@@ -21,7 +21,7 @@ class CriticsPicksControllerTests: XCTestCase {
         
         sut = CriticsPicksController(
             collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
-            movieService: .init()
+            dataService: .init()
         )
     }
 
@@ -87,7 +87,7 @@ class CriticsPicksControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         let mockURLSession = MockURLSession()
-        sut.movieService.session = mockURLSession
+        sut.dataService.session = mockURLSession
         
         let request = URLRequest(url: URL(string: "https://api.nytimes.com/svc/movies/v2/reviews/picks.json?api-key=7mZQQ5atRHInAGiRitXjfpiNhKqgCIKj&offset=0")!)
         
@@ -100,7 +100,7 @@ class CriticsPicksControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         let mockURLSession = MockURLSession()
-        sut.movieService.session = mockURLSession
+        sut.dataService.session = mockURLSession
         
         sut.getMovies()
         
@@ -134,7 +134,7 @@ class CriticsPicksControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         let mockURLSession = MockURLSession()
-        sut.movieService.session = mockURLSession
+        sut.dataService.session = mockURLSession
         
         sut.getMovies()
 

@@ -8,7 +8,7 @@
 import Foundation
 
 struct CriticsPicksResource: APIResource {
-    var resourcePath: String { NYTimesAPI.criticsPath }
+    var resourcePath: String { "/picks.json" }
     
     var queryItems: [(String, String?)] {
         [

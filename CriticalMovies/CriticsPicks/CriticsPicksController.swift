@@ -9,11 +9,11 @@ import UIKit
 
 class CriticsPicksController: UIViewController {
     var collectionView: MovieCollectionView<CriticsPicksCell>
-    var movieService: MovieService
+    var dataService: DataService
     
-    init(collectionView: MovieCollectionView<CriticsPicksCell>, movieService: MovieService) {
+    init(collectionView: MovieCollectionView<CriticsPicksCell>, dataService: DataService) {
         self.collectionView = collectionView
-        self.movieService = movieService
+        self.dataService = dataService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,10 +47,7 @@ extension CriticsPicksController: MovieCollectionViewDelegate {
 
         let resource = CriticsPicksResource(offset: collectionView.offset)
         
-        guard let resourceUrl = resource.url else { return }
-        let request = URLRequest(url: resourceUrl)
-
-        movieService.loadMovieReviews(with: request) { [weak self] result in
+        dataService.load(resource) { [weak self] result in
             switch result {
             case .success(let result):
                 if let movies = result.movies {

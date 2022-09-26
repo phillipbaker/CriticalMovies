@@ -14,8 +14,8 @@ protocol APIResource {
 
 extension APIResource {
     
-    var host: String { NYTimesAPI.host }
-    var scheme: String { NYTimesAPI.scheme }
+    var host: String { TimesAPI.host }
+    var scheme: String { TimesAPI.scheme }
  
     var url: URL? {
         var components = URLComponents()
@@ -23,12 +23,12 @@ extension APIResource {
         components.host = host
         components.scheme = scheme
         
-        components.path = NYTimesAPI.sharedPath
+        components.path = TimesAPI.sharedPath
         components.path.append(resourcePath)
         
         components.queryItems = []
         
-        let apiKey = URLQueryItem(name: NYTimesAPI.key.name, value: NYTimesAPI.key.value)
+        let apiKey = URLQueryItem(name: TimesAPI.key.name, value: TimesAPI.key.value)
         
         components.queryItems?.append(apiKey)
         components.queryItems?.append(contentsOf: resourceQueryItems)
