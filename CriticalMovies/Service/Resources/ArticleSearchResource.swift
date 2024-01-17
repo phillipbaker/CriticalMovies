@@ -1,38 +1,32 @@
 //
-//  APIResource.swift
+//  ArticleSearchResource.swift
 //  CriticalMovies
 //
-//  Created by Phillip Baker on 1/19/22.
+//  Created by Phillip Baker on 12/15/23.
 //
 
 import Foundation
 
-protocol APIResource {
-    var resourcePath: String { get }
+protocol ArticleSearchResource {
     var queryItems: [(String, String?)] { get }
 }
 
-extension APIResource {
-    
-    var host: String { TimesAPI.host }
-    var scheme: String { TimesAPI.scheme }
+extension ArticleSearchResource {
+    var host: String { ArticleSearchAPI.host }
+    var scheme: String { ArticleSearchAPI.scheme }
  
     var url: URL? {
         var components = URLComponents()
         
         components.host = host
         components.scheme = scheme
-        
-        components.path = TimesAPI.sharedPath
-        components.path.append(resourcePath)
-        
+        components.path = ArticleSearchAPI.path
         components.queryItems = []
         
-        let apiKey = URLQueryItem(name: TimesAPI.key.name, value: TimesAPI.key.value)
+        let apiKey = URLQueryItem(name: ArticleSearchAPI.key.name, value: ArticleSearchAPI.key.value)
         
         components.queryItems?.append(apiKey)
         components.queryItems?.append(contentsOf: resourceQueryItems)
-        
         return components.url
     }
     

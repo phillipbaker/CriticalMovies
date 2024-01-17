@@ -31,12 +31,12 @@ class SearchResultCell: UICollectionViewCell, MovieCell {
         fetchMovieImage(for: movie)
         titleLabel.text = movie.title
         descriptionLabel.text = movie.summary
-        if movie.criticsPick == 1 { displayCriticsPickLabel() }
+        if movie.isCriticsPick { displayCriticsPickLabel() }
     }
     
     private func fetchMovieImage(for movie: Movie) {
         /// Image set to placeholder by default so we just return.
-        guard let imageUrl = movie.multimedia?.imageUrl else { return }
+        guard let imageUrl = movie.image else { return }
         
         /// Using optional try because we set the image on imageView and reset to the placeholder in onReuse.
         let token = imageService.downloadImage(from: imageUrl) { result in

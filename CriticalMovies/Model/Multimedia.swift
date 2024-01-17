@@ -7,10 +7,23 @@
 
 import Foundation
 
-struct Multimedia: Decodable, Hashable {
-    let imageUrl: String
-
+struct Multimedia: Decodable {
+    let imageWidth: Int
+    let path: String
+    
+    func mapPathToURL() -> String {
+        return "https://nytimes.com/" + path
+    }
+    
     enum CodingKeys: String, CodingKey {
-        case imageUrl = "src"
+        case imageWidth = "width"
+        case path = "url"
+    }
+    
+    static func mapLargestImage(from multimedia: [Multimedia?]) -> Multimedia? {
+        return multimedia
+            .compactMap { $0 }
+            .sorted(by: { $0.imageWidth > $1.imageWidth })
+            .first
     }
 }

@@ -34,13 +34,13 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
         fetchMovieImage(for: movie)
         titleLabel.text = movie.title
         descriptionLabel.text = movie.summary
-        dateLabel.text = movie.publicationDate.formatted().uppercased()
+        dateLabel.text = movie.publicationDate?.formatted().uppercased() ?? "Unknown Date"
         reviewerLabel.text = "by \(movie.byline.uppercased())"
     }
     
     private func fetchMovieImage(for movie: Movie) {
         /// Image set to placeholder by default so we just return.
-        guard let imageUrl = movie.multimedia?.imageUrl else { return }
+        guard let imageUrl = movie.image else { return }
         
         /// Using optional try because we set the image on imageView and reset to the placeholder in onReuse.
         let token = imageService.downloadImage(from: imageUrl) { result in
@@ -82,6 +82,8 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
         contentView.layer.cornerRadius = 8
         contentView.layer.cornerCurve = .continuous
         contentView.backgroundColor = UIColor.descriptionBackground
+        
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         
         let padding: CGFloat = 12
         

@@ -21,7 +21,7 @@ class CriticsPicksControllerTests: XCTestCase {
         
         sut = CriticsPicksController(
             collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
-            dataService: .init()
+            dataService: DataService(session: MockURLSession())
         )
     }
 
@@ -88,8 +88,9 @@ class CriticsPicksControllerTests: XCTestCase {
         
         let mockURLSession = MockURLSession()
         sut.dataService.session = mockURLSession
+        let apiKey = ArticleSearchAPI.key.value
         
-        let request = URLRequest(url: URL(string: "https://api.nytimes.com/svc/movies/v2/reviews/picks.json?api-key=7mZQQ5atRHInAGiRitXjfpiNhKqgCIKj&offset=0")!)
+        let request = URLRequest(url: URL(string: "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=\(apiKey)&fq=section_name:Movies%20AND%20type_of_material:Review%20AND%20kicker:%20(Critic%E2%80%99s%20Pick)&sort=newest&page=0")!)
         
         sut.getMovies()
         
@@ -98,6 +99,8 @@ class CriticsPicksControllerTests: XCTestCase {
     
     func test_getMoviesNetworkCall_withSuccessfulResponse_shouldSaveDataInCollectionViewMoviesArray() {
         sut.loadViewIfNeeded()
+        
+        let formatter = ISO8601DateFormatter()
         
         let mockURLSession = MockURLSession()
         sut.dataService.session = mockURLSession
@@ -117,14 +120,13 @@ class CriticsPicksControllerTests: XCTestCase {
         XCTAssertEqual(
             sut.collectionView.movies, [
                 Movie(
-                    title: "Stay on Board: The Leo Baker Story",
-                    criticsPick: 1,
-                    byline: "Teo Bugbee",
-                    headline: "‘Stay on Board: The Leo Baker Story’ Review: Surviving the Grind",
-                    summary: "In this documentary, a professional skateboarder turns down the Olympics for the chan  to live openly.",
-                    publicationDate: "2022-08-11",
-                    link: Link(reviewUrl: "https://www.nytimes.com/2022/08/11/movies/stay-on-board-the-leo-baker-story-review.html"),
-                    multimedia: Multimedia(imageUrl: "https://static01.    .com/images/2022/08/12/arts/11leo-baker-review1/11leo-baker-review1-mediumThreeByTwo440.jpg")
+                    title: "â€˜The First Yearâ€™ Review: Allendeâ€™s Rule in Chile",
+                    isCriticsPick: true,
+                    byline: "Devika Girish",
+                    summary: "The French-language version of a 1971 documentary by Patricio GuzmÃ¡n is an extraordinary document of a nation in transition.",
+                    publicationDate: formatter.date(from: "2023-09-07 15:44:20 +0000"),
+                    url: "https://www.nytimes.com/2023/09/07/movies/the-first-year-review.html",
+                    image: "https://nytimes.com/images/2023/09/08/multimedia/07first-year-review-pfmw/07first-year-review-pfmw-superJumbo.jpg"
                 )
             ]
         )

@@ -7,14 +7,12 @@
 
 import Foundation
 
-struct CriticsPicksResource: APIResource {
-    var resourcePath: String { "/picks.json" }
-    
-    var queryItems: [(String, String?)] {
-        [
-            ("offset", String(offset))
-        ]
-    }
+struct CriticsPicksResource: ArticleSearchResource {    
+    var queryItems: [(String, String?)] {[
+        ("fq", "section_name:Movies AND type_of_material:Review AND kicker: \("(Critic’s Pick)")"),
+        ("sort", "newest"),
+        ("page", String(offset))
+    ]}
     
     var offset: Int
 }

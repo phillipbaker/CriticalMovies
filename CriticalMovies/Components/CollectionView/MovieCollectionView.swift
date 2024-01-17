@@ -102,7 +102,7 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let movie = dataSource.itemIdentifier(for: indexPath) else { return }
-        delegate?.loadReview(for: movie.link.reviewUrl)
+        delegate?.loadReview(for: movie.url)
     }
 
     // MARK: - Load More Movies on End Scroll
@@ -116,7 +116,7 @@ class MovieCollectionView<Cell: MovieCell>: LoadingViewController, UICollectionV
         // If movies is empty, pulling down (to refresh) calls getMovies because contentOffset.y starting value is .zero
         if !movies.isEmpty, scrollPosition > contentHeight - height {
             guard hasMoreToLoad, !isLoading else { return }
-            offset += 20
+            offset += 1
             delegate?.getMovies()
         }
     }

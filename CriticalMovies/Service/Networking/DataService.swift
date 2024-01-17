@@ -15,7 +15,7 @@ extension URLSession: URLSessionProtocol {}
 
 
 protocol DataLoading {
-    func load(_ resource: APIResource, completion: @escaping (Result<MovieResult, NetworkingError>) -> Void)
+    func load(_ resource: ArticleSearchResource, completion: @escaping (Result<ArticleSearchResult, NetworkingError>) -> Void)
 }
 
 final class DataService: DataLoading {
@@ -27,7 +27,7 @@ final class DataService: DataLoading {
         self.session = session
     }
     
-    func load(_ resource: APIResource, completion: @escaping (Result<MovieResult, NetworkingError>) -> Void) {
+    func load(_ resource: ArticleSearchResource, completion: @escaping (Result<ArticleSearchResult, NetworkingError>) -> Void) {
         
         guard let url = resource.url else {
             completion(.failure(.invalidUrl))
@@ -54,9 +54,10 @@ final class DataService: DataLoading {
             }
             
             do {
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(ArticleSearchResult.self, from: data)
                 DispatchQueue.main.async { completion(.success(result)) }
             } catch {
+                print(error)
                 DispatchQueue.main.async { completion(.failure(.invalidData)) }
             }
         }

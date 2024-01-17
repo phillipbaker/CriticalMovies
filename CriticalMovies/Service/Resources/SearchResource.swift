@@ -7,15 +7,13 @@
 
 import Foundation
 
-struct SearchResource: APIResource {
-    var resourcePath: String { "/search.json" }
-    
-    var queryItems: [(String, String?)] {
-        [
-            ("offset", String(offset)),
-            ("query", searchQuery)
-        ]
-    }
+struct SearchResource: ArticleSearchResource {
+    var queryItems: [(String, String?)] {[
+        ("fq", "section_name:Movies AND type_of_material:Review"),
+        ("sort", "newest"),
+        ("page", String(offset)),
+        ("q", searchQuery)
+    ]}
     
     var offset: Int
     var searchQuery: String?

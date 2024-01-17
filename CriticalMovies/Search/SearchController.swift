@@ -75,7 +75,7 @@ extension SearchController: MovieCollectionViewDelegate {
         dataService.load(resource) { [weak self] result in
             switch result {
             case .success(let result):
-                if let movies = result.movies {
+                if let movies = Article.mapArticlesToMovies(articles: result.response.articles) {
                     self?.collectionView.updateUI(with: movies)
                 } else {
                     self?.collectionView.hasMoreToLoad = false
