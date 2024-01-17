@@ -11,7 +11,6 @@ import UIKit
 class CriticsPicksCell: UICollectionViewCell, MovieCell {
     var onReuse: () -> Void = {}
     var imageView = UIImageView.makeMovieImageView()
-    var dataService = DataService()
     var imageService = ImageService()
     
     private(set) var titleLabel = UILabel.makeLabel(withTextStyle: .title2)

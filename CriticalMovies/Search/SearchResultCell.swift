@@ -8,7 +8,6 @@
 import UIKit
 
 class SearchResultCell: UICollectionViewCell, MovieCell {
-    var dataService = DataService()
     var imageService = ImageService()
     
     var onReuse: () -> Void = {}
