@@ -29,8 +29,7 @@ struct Article: Decodable {
     }
     
     func mapPublicationDate() -> Date? {
-        let formatter = ISO8601DateFormatter()
-        return formatter.date(from: publicationDate)
+        return DateFormatter.iso8601Formatter.date(from: publicationDate)
     }
 
     func mapToMovie() -> Movie {

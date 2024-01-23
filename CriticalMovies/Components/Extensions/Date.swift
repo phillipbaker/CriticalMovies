@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    func formatted() -> String {
-        return self.formatted(date: .abbreviated, time: .omitted)
+    func abbreviatedUppercase() -> String {
+        return self.formatted(date: .abbreviated, time: .omitted).uppercased()
     }
 }

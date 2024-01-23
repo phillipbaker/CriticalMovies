@@ -33,7 +33,7 @@ class CriticsPicksCell: UICollectionViewCell, MovieCell {
         fetchMovieImage(for: movie)
         titleLabel.text = movie.title
         descriptionLabel.text = movie.summary
-        dateLabel.text = movie.publicationDate?.formatted().uppercased() ?? "Unknown Date"
+        dateLabel.text = movie.publicationDate?.abbreviatedUppercase() ?? "Unknown Date"
         reviewerLabel.text = "by \(movie.byline.uppercased())"
     }
     
