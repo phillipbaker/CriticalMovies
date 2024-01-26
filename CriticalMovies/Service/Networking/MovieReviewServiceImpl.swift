@@ -1,5 +1,5 @@
 //
-//  DataService.swift
+//  MovieReviewServiceImpl.swift
 //  CriticalMovies
 //
 //  Created by Phillip Baker on 1/24/22.
@@ -14,11 +14,11 @@ protocol URLSessionProtocol {
 extension URLSession: URLSessionProtocol {}
 
 
-protocol DataLoading {
+protocol MovieReviewService {
     func load(_ resource: ArticleSearchResource, completion: @escaping (Result<ArticleSearchResult, NetworkingError>) -> Void)
 }
 
-final class DataService: DataLoading {
+final class MovieReviewServiceImpl: MovieReviewService {
     private var dataTask: URLSessionDataTask?
     
     var session: URLSessionProtocol

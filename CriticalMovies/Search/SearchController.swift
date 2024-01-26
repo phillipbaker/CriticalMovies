@@ -9,13 +9,13 @@ import UIKit
 
 class SearchController: UIViewController {
     var collectionView: MovieCollectionView<SearchResultCell>
-    var dataService: DataService
+    var movieReviewService: MovieReviewService
     var searchController: UISearchController
     var searchQuery: String?
     
-    init(collectionView: MovieCollectionView<SearchResultCell>, dataService: DataService, searchController: UISearchController) {
+    init(collectionView: MovieCollectionView<SearchResultCell>, movieReviewService: MovieReviewService, searchController: UISearchController) {
         self.collectionView = collectionView
-        self.dataService = dataService
+        self.movieReviewService = movieReviewService
         self.searchController = searchController
         super.init(nibName: nil, bundle: nil)
     }
@@ -72,7 +72,7 @@ extension SearchController: MovieCollectionViewDelegate {
         
         let resource = SearchResource(offset: collectionView.offset, searchQuery: searchQuery)
         
-        dataService.load(resource) { [weak self] result in
+        movieReviewService.load(resource) { [weak self] result in
             switch result {
             case .success(let result):
                 if let movies = Article.mapArticlesToMovies(articles: result.response.articles) {

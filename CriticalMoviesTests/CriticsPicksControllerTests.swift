@@ -11,21 +11,26 @@ import XCTest
 class CriticsPicksControllerTests: XCTestCase {
     // MARK: - Properties
     
+    private var mockURLSession: MockURLSession!
+    private var movieReviewService: MovieReviewServiceImpl!
     private var sut: CriticsPicksController!
-    private var dataService: DataService!
-    
+
     // MARK: - Setup and Teardown
     
     override func setUp() {
         super.setUp()
+        mockURLSession = MockURLSession()
+        movieReviewService = MovieReviewServiceImpl(session: mockURLSession)
         
         sut = CriticsPicksController(
-            collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
-            dataService: DataService(session: MockURLSession())
+            collectionView: MovieCollectionView(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
+            movieReviewService: movieReviewService
         )
     }
 
     override func tearDown() {
+        mockURLSession = nil
+        movieReviewService = nil
         sut = nil
         super.tearDown()
     }
@@ -86,26 +91,15 @@ class CriticsPicksControllerTests: XCTestCase {
     func test_getMoviesNetworkCall_shouldMakeDataTaskToGetCriticsPicksMovies() {
         sut.loadViewIfNeeded()
         
-        let mockURLSession = MockURLSession()
-        sut.dataService.session = mockURLSession
         let apiKey = ArticleSearchAPI.key.value
         
         let request = URLRequest(url: URL(string: "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=\(apiKey)&fq=section_name:Movies%20AND%20type_of_material:Review%20AND%20kicker:%20(Critic%E2%80%99s%20Pick)&sort=newest&page=0")!)
-        
-        sut.getMovies()
         
         mockURLSession.verifyDataTask(with: request)
     }
     
     func test_getMoviesNetworkCall_withSuccessfulResponse_shouldSaveDataInCollectionViewMoviesArray() {
         sut.loadViewIfNeeded()
-        
-        let formatter = ISO8601DateFormatter()
-        
-        let mockURLSession = MockURLSession()
-        sut.dataService.session = mockURLSession
-        
-        sut.getMovies()
         
         let handleResultsCalled = expectation(description: "handleResults called")
         
@@ -124,7 +118,7 @@ class CriticsPicksControllerTests: XCTestCase {
                     isCriticsPick: true,
                     byline: "Devika Girish",
                     summary: "The French-language version of a 1971 documentary by Patricio GuzmÃ¡n is an extraordinary document of a nation in transition.",
-                    publicationDate: formatter.date(from: "2023-09-07 15:44:20 +0000"),
+                    publicationDate: DateFormatter.iso8601Formatter.date(from: "2023-09-07 15:44:20 +0000"),
                     url: "https://www.nytimes.com/2023/09/07/movies/the-first-year-review.html",
                     image: "https://nytimes.com/images/2023/09/08/multimedia/07first-year-review-pfmw/07first-year-review-pfmw-superJumbo.jpg"
                 )
@@ -134,11 +128,6 @@ class CriticsPicksControllerTests: XCTestCase {
     
     func test_getMoviesNetworkCall_withSuccessBeforeAsync_shouldNotSaveDataInCollectionViewMoviesArray() {
         sut.loadViewIfNeeded()
-        
-        let mockURLSession = MockURLSession()
-        sut.dataService.session = mockURLSession
-        
-        sut.getMovies()
 
         mockURLSession.dataTaskArgsCompletionHandler.first?(jsonData(), response(statusCode: 200), nil)
         

@@ -15,11 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
 
-        let dataService = DataService()
+        let movieReviewService = MovieReviewServiceImpl()
 
         let criticsPicksVC = CriticsPicksController(
             collectionView: .init(cell: CriticsPicksCell(), layout: Layout.criticsPicksLayout),
-            dataService: dataService
+            movieReviewService: movieReviewService
         )
         
         let criticsPicksNC = UINavigationController(rootViewController: criticsPicksVC)
@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let searchVC = SearchController(
             collectionView: .init(cell: SearchResultCell(), layout: Layout.resultsLayout),
-            dataService: dataService,
+            movieReviewService: movieReviewService,
             searchController: .init(searchResultsController: nil)
         )
         

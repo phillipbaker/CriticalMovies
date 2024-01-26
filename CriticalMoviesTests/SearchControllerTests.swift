@@ -19,7 +19,7 @@ class SearchControllerTests: XCTestCase {
         super.setUp()
         sut = SearchController(
             collectionView: .init(cell: SearchResultCell(), layout: Layout.resultsLayout),
-            dataService: DataService(),
+            movieReviewService: MovieReviewServiceImpl(),
             searchController: UISearchController(searchResultsController: nil)
         )
     }
