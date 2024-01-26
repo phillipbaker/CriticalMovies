@@ -15,7 +15,7 @@ final class MockURLSession: URLSessionProtocol {
     var dataTaskArgsRequest: [URLRequest] = []
     var dataTaskArgsCompletionHandler: [(Data?, URLResponse?, Error?) -> Void] = []
     
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
         dataTaskCallCount += 1
         dataTaskArgsRequest.append(request)
         dataTaskArgsCompletionHandler.append(completionHandler)
@@ -40,8 +40,8 @@ final class MockURLSession: URLSessionProtocol {
     }
 }
 
-private class DummyURLSessionDataTask: URLSessionDataTask {
-    override func resume() {}
+private class DummyURLSessionDataTask: URLSessionDataTaskProtocol {
+    func resume() {}
 }
 
 func verifyMethodCalledOnce(

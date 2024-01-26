@@ -7,11 +7,21 @@
 
 import UIKit
 
-protocol URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+protocol URLSessionDataTaskProtocol {
+    func resume()
 }
 
-extension URLSession: URLSessionProtocol {}
+extension URLSessionDataTask: URLSessionDataTaskProtocol {}
+
+protocol URLSessionProtocol {
+    func dataTask(with request: URLRequest, completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol
+}
+
+extension URLSession: URLSessionProtocol {
+    func dataTask(with request: URLRequest, completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
+        return (dataTask(with: request, completionHandler: completionHandler) as URLSessionDataTask) as URLSessionDataTaskProtocol
+    }
+}
 
 
 protocol MovieReviewService {
@@ -60,7 +70,7 @@ final class MovieReviewServiceImpl: MovieReviewService {
                 print(error)
                 DispatchQueue.main.async { completion(.failure(.invalidData)) }
             }
-        }
+        } as? URLSessionDataTask
         
         dataTask?.resume()
     }
