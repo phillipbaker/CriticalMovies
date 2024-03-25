@@ -10,4 +10,4 @@ It’s built with **UIKit**, **UICollectionView**, and **Auto Layout** in code. 
 
 ---
 
-![cm-collage-3-750](https://github.com/phillipbaker/CriticalMovies/assets/16352712/e4c645b2-6cc9-4b7e-94e8-e418e251fe2d)
+![cm-collage-3](https://github.com/phillipbaker/CriticalMovies/assets/16352712/906b2d7a-be6b-44fa-b7de-e0ad3a83e71b)
