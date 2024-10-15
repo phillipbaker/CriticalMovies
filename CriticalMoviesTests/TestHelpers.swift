@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import CriticalMovies
 
 func executeRunLoop() {
     RunLoop.current.run(until: Date())
@@ -19,6 +20,16 @@ func response(statusCode: Int) -> HTTPURLResponse? {
         headerFields: nil
     )
 }
+
+var ruleInChileMovieFake = Movie(
+    title: "â€˜The First Yearâ€™ Review: Allendeâ€™s Rule in Chile",
+    isCriticsPick: true,
+    byline: "Devika Girish",
+    summary: "The French-language version of a 1971 documentary by Patricio GuzmÃ¡n is an extraordinary document of a nation in transition.",
+    publicationDate: DateFormatter.iso8601Formatter.date(from: "2023-09-07 15:44:20 +0000"),
+    url: "https://www.nytimes.com/2023/09/07/movies/the-first-year-review.html",
+    image: "https://nytimes.com/images/2023/09/08/multimedia/07first-year-review-pfmw/07first-year-review-pfmw-superJumbo.jpg"
+)
 
 func jsonData() -> Data {
         """

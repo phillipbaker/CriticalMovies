@@ -11,20 +11,27 @@ import XCTest
 class SearchControllerTests: XCTestCase {
     // MARK: - Properties
     
+    private var mockURLSession: MockURLSession!
+    private var movieReviewService: MovieReviewServiceImpl!
     private var sut: SearchController!
     
     // MARK: - Setup and Teardown
     
     override func setUp() {
         super.setUp()
+        mockURLSession = MockURLSession()
+        movieReviewService = MovieReviewServiceImpl(session: mockURLSession)
+        
         sut = SearchController(
-            collectionView: .init(cell: SearchResultCell(), layout: Layout.resultsLayout),
-            movieReviewService: MovieReviewServiceImpl(),
+            collectionView: MovieCollectionView(cell: SearchResultCell(), layout: Layout.resultsLayout),
+            movieReviewService: movieReviewService,
             searchController: UISearchController(searchResultsController: nil)
         )
     }
 
     override func tearDown() {
+        mockURLSession = nil
+        movieReviewService = nil
         sut = nil
         super.tearDown()
     }
@@ -114,5 +121,41 @@ class SearchControllerTests: XCTestCase {
     
     // MARK: - Networking Tests
     
+    func test_getMoviesNetworkCall_shouldMakeDataTaskToGetSearchResultMovies() {
+        let apiKey = ArticleSearchAPI.key.value
+        
+        sut.loadViewIfNeeded()
+        sut.searchQuery = "year"
+        sut.getMovies()
+        
+        let request = URLRequest(url: URL(string: "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=\(apiKey)&fq=section_name:Movies%20AND%20type_of_material:Review&sort=newest&page=0&q=year")!)
+
+        mockURLSession.verifyDataTask(with: request)
+    }
     
+    func test_getMoviesNetworkCall_withSuccessfulResponse_shouldSaveDataInCollectionViewMoviesArray() {
+        sut.loadViewIfNeeded()
+        sut.getMovies()
+        
+        let handleResultsCalled = expectation(description: "handleResults called")
+        
+        sut.collectionView.handleResults = { _ in
+            handleResultsCalled.fulfill()
+        }
+
+        mockURLSession.dataTaskArgsCompletionHandler.first?(jsonData(), response(statusCode: 200), nil)
+        
+        waitForExpectations(timeout: 0.01)
+        
+        XCTAssertEqual(sut.collectionView.movies, [ruleInChileMovieFake])
+    }
+    
+    func test_getMoviesNetworkCall_withSuccessBeforeAsync_shouldNotSaveDataInCollectionViewMoviesArray() {
+        sut.loadViewIfNeeded()
+        sut.getMovies()
+
+        mockURLSession.dataTaskArgsCompletionHandler.first?(jsonData(), response(statusCode: 200), nil)
+        
+        XCTAssertEqual(sut.collectionView.movies, [])
+    }
 }
